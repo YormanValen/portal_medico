@@ -1,4 +1,3 @@
-snackbar: false,
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
@@ -8,7 +7,7 @@ import { onMounted } from 'vue';
 
 const router = useRouter();
 
-const datosUsuario = ref({}); // Inicializar como objeto vacío
+const datosUsuario = ref(); // Inicializar como objeto vacío
 
 
 const edad = ref('');
@@ -67,9 +66,6 @@ const handleErcChange = (newValue: boolean) => {
 const handleInestabilidadHemodinamicaChange = (newValue: boolean) => {
     inestabilidadHemodinamica.value = newValue;
 };
-
-
-
 
 
 //regla para el campo age que sea de 18 a 100 y tambien que es requerido y que sea un numero
@@ -199,7 +195,6 @@ const cargarDatosUsuario = () => {
         categoriaCirugia.value = datosUsuario.value.categoriaCirugia;
         cupsProcedimiento.value = datosUsuario.value.cupsProcedimiento;
         tipoAbordajeQuirurgico.value = datosUsuario.value.tipoAbordajeQuirurgico;
-        // ... el resto de tus campos
     }
 };
 

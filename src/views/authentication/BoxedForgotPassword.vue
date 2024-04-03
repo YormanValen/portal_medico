@@ -11,7 +11,6 @@ import ResetPassword from '@/components/auth/ResetForm.vue';
                 <v-col cols="12" lg="4"  xl="5" class="d-flex align-center">
                     <v-card rounded="md" elevation="10" class="px-sm-1 px-0  mx-auto">
                         <v-card-item class="pa-sm-8">
-                            <div class="d-flex justify-center my-5">  <Logo /></div>
                             <p class="text-subtitle-1 text-center text-10">
                                 Please enter the email address associated with your account and We will email you a link to reset your password.
                             </p>

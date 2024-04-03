@@ -59,7 +59,7 @@ function validate(values: any, { setErrors }: any) {
                 <template v-slot:label class="">Remeber this Device</template>
             </v-checkbox>
             <div class="ml-sm-auto">
-                <RouterLink to="" class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium">
+                <RouterLink to="/auth/forgot-password2" class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium">
                     Forgot Password
                     ?</RouterLink>
             </div>

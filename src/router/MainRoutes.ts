@@ -113,6 +113,11 @@ const MainRoutes = {
             name: 'UserProfile',
             path: '/apps/user/profile',
             component: () => import('@/views/apps/user-profile/Profile.vue')
+        },
+        {
+            name: 'Report',
+            path: '/generateReport',
+            component: () => import('@/views/calculators/ReportForm.vue')
         }
 
         /* {

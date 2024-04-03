@@ -39,6 +39,8 @@
                     <v-card-actions>
                         <v-btn color="primary" @click="verDetalles">Ver Detalles</v-btn>
                         <v-btn color="secondary" @click="modificarDatos">Modificar Datos</v-btn>
+                        <v-btn color="primary" @click="generarInforme">Generar informe</v-btn>
+
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -69,6 +71,7 @@
                     <v-card-actions>
                         <v-btn color="primary" @click="verDetalles">Ver Detalles</v-btn>
                         <v-btn color="secondary" @click="modificarDatos">Modificar Datos</v-btn>
+
                     </v-card-actions>
                 </v-card>
                 <div class="text-center mt-10 ">
@@ -141,8 +144,9 @@ const modificarDatos = () => {
     // Lógica para permitir al usuario modificar los datos de entrada
     router.push('/calculator');
 };
-</script>
 
-<style scoped>
-.v-card {}
-</style>
+const generarInforme = () => {
+    // Lógica para generar un informe basado en los resultados
+    router.push('/generateReport');
+};
+</script>

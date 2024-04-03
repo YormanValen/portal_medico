@@ -21,7 +21,8 @@ const user = computed(() => authStore.user);
                 </v-avatar>
             </v-btn>
         </template>
-        <v-sheet rounded="md" width="360" elevation="10">
+        <!-- Contenido del perfil cuando el usuario no está loggeado -->
+        <v-sheet v-if="user" rounded="md" width="360" elevation="10">
             <div class="px-8 pt-6">
                 <h6 class="text-h5 font-weight-medium">User Profile</h6>
                 <div class="d-flex align-center mt-4 pb-6">
@@ -33,8 +34,8 @@ const user = computed(() => authStore.user);
                         <span class="text-subtitle-1 font-weight-regular textSecondary">{{ user.charge }}</span>
                         <div class="d-flex align-center mt-1">
                             <MailIcon size="18" stroke-width="1.5" />
-                            <span
-                                class="text-subtitle-1 font-weight-regular textSecondary ml-2">{{ user.username }}</span>
+                            <span class="text-subtitle-1 font-weight-regular textSecondary ml-2">{{ user.username
+                                }}</span>
                         </div>
                     </div>
                 </div>
@@ -59,6 +60,16 @@ const user = computed(() => authStore.user);
 
             <div class="pt-4 pb-6 px-8 text-center">
                 <v-btn color="primary" variant="outlined" block @click="authStore.logout()">Logout</v-btn>
+            </div>
+        </v-sheet>
+
+        <!-- Contenido del perfil cuando el usuario no está loggeado -->
+        <v-sheet v-else rounded="md" width="360" elevation="10">
+            <div class="text-center pa-6">
+                <h5 class="mb-2">Acción requerida</h5>
+                <p class="mb-4">Para acceder a esta sección, inicia sesión o crea una cuenta.</p>
+                <v-btn color="primary" class="mx-2" to="auth/login2">Login</v-btn>
+                <v-btn color="secondary" class="mx-2" to="auth/register2">Register</v-btn>
             </div>
         </v-sheet>
     </v-menu>
