@@ -21,6 +21,7 @@ export const useAuthStore = defineStore({
 
                 // Obtener los detalles completos del usuario
                 const userDetails = this.getUserDetails(username);
+                console.log('userDetails', userDetails);
 
                 const data = await response.json();
                 if (!response.ok) {

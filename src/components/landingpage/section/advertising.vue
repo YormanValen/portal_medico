@@ -43,6 +43,6 @@ const isChecked = ref(false);
 
 <style lang="scss" scoped>
 .v-container {
-    max-width: 1200px !important;
+
 }
 </style>

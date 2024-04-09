@@ -8,7 +8,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
         <v-container fluid class="pa-3">
             <v-row class="h-100vh d-flex justify-center  align-center">
                 <v-col cols="12" class="d-flex align-center">
-                    <v-card rounded="md" elevation="10" class="px-sm-1 px-0  mx-auto" max-width="550">
+                    <v-card rounded="md" elevation="10" class="px-sm-1 px-0  mx-auto" max-width="800">
                         <v-card-item class="pa-sm-8">
                             <!-- <div class="text-h6 text-medium-emphasis text-center mb-6">Your Social Campaigns</div> -->
                             <RegisterForm />

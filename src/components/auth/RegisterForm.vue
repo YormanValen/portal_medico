@@ -22,6 +22,8 @@ const orcid = ref('');
 const charge = ref('');
 const fname = ref('');
 const apiError = ref('');
+const agreeToPrivacyPolicy = ref(false); // Para manejar el estado del checkbox
+
 
 
 const especialities = ref(["Foo", "Bar", "Fizz", "Buzz"]);
@@ -155,12 +157,47 @@ const submitRegistration = () => {
                 <VTextField v-model="charge" required></VTextField>
             </v-col>
         </v-row>
+        <v-row>
+            <v-checkbox v-model="agreeToPrivacyPolicy"
+                :rules="[v => v || 'Debes aceptar las políticas de privacidad para continuar']"
+                class="mb-3 privacy-checkbox">
+                <template v-slot:label>
+                    <div class="d-flex align-center justify-content-between">
+                        <span class="flex-grow-1 ">Tus datos son muy importantes para nosotros y los tratamos con la máxima seguridad y
+                            confidencialidad. ¿Aceptas nuestras <RouterLink class="link-privacy-policy" color="primary" to="/privacy-policy">políticas de
+                                privacidad?</RouterLink> </span>
+                    </div>
+                </template>
+            </v-checkbox>
+        </v-row>
 
         <v-btn size="large" @click.prevent="submitRegistration" class="mt-2" color="primary" block submit flat>Sign
-            Up</v-btn>
+            up
+        </v-btn>
 
         <div v-if="apiError" class="mt-2 alert-box">
             <v-alert type="error" dense>{{ apiError }}</v-alert>
         </div>
     </v-form>
 </template>
+
+<style scoped>
+
+.privacy-checkbox {
+    padding: 0 .5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.privacy-checkbox .v-selection-control {
+    flex-direction: row-reverse !important;
+}
+
+.link-privacy-policy {
+    color: rgb(var(--v-theme-primary)) !important;
+    text-decoration: none;
+}
+
+
+
+</style>

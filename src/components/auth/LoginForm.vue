@@ -12,8 +12,8 @@ import { router } from '@/router';
 const checkbox = ref(false);
 const valid = ref(false);
 const show1 = ref(false);
-const password = ref('');
-const username = ref('');
+const password = ref('admin123');
+const username = ref('yorman@outlook.com');
 const passwordRules = ref([
     (v: string) => !!v || 'Password is required',
     (v: string) => (v && v.length <= 10) || 'Password must be less than 10 characters'
@@ -49,7 +49,7 @@ function validate(values: any, { setErrors }: any) {
     </div>
     <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
         <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-lightText">Username</v-label>
-        <VTextField v-model="username" :rules="emailRules" class="mb-8" required hide-details="auto"></VTextField>
+        <VTextField v-model="username"  :rules="emailRules" class="mb-8" required hide-details="auto"></VTextField>
         <v-label class="text-subtitle-1 font-weight-semibold pb-2 text-lightText">Password</v-label>
         <VTextField v-model="password" :rules="passwordRules" required hide-details="auto" type="password"
             class="pwdInput"></VTextField>

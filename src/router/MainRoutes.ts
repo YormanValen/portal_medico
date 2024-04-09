@@ -118,6 +118,11 @@ const MainRoutes = {
             name: 'Report',
             path: '/generateReport',
             component: () => import('@/views/calculators/ReportForm.vue')
+        },
+        {
+            name:'PrivacyPolicy',
+            path:'/privacy-policy',
+            component:()=>import('@/views/privacy-policy/PrivacyPolicy.vue')
         }
 
         /* {
