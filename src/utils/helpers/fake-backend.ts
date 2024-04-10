@@ -11,12 +11,15 @@ function fakeBackend() {
 
             function handleRoute() {
                 switch (true) {
+                    case url.endsWith('/risk-percentages') && opts.method === 'GET':
+                        return getRiskPercentages();
                     case url.endsWith('/users/authenticate') && opts.method === 'POST':
                         return authenticate();
                     case url.endsWith('/users') && opts.method === 'GET':
                         return getUsers();
                     case url.endsWith('/users/register') && opts.method === 'POST':
                         return registerUser();
+
                     default:
                         // pass through any requests not handled above
                         return realFetch(url, opts)
@@ -43,10 +46,6 @@ function fakeBackend() {
                     token: 'fake-jwt-token'
                 });
             }
-
-
-          
-            
 
             function getUsers() {
                 if (!isAuthenticated()) return unauthorized();
@@ -100,6 +99,57 @@ function fakeBackend() {
                 localStorage.setItem('users', JSON.stringify(users));
 
                 return ok(newUser);
+            }
+
+            function getRiskPercentages() {
+                console.log('entre');
+                const riskDataByLabel = {
+                    // Ejemplo de estructura para la etiqueta "Mortalidad"
+                    mortalidad: {
+                        progressPercentage: 10, // Supongamos que este es el porcentaje de progreso
+                        yourRisk: '3.6%', // Tu Riesgo
+                        averageRisk: '5.6%', // Riesgo Promedio
+                        chanceOfOutcome: 'Below Average' // Probabilidad de Resultado
+                    },
+                    complicaciones_mayores: {
+                        progressPercentage: 50,
+                        yourRisk: '8.6%',
+                        averageRisk: '6.6%',
+                        chanceOfOutcome: 'Above Average'
+                    },
+                    reintervencion_quirurgica: {
+                        progressPercentage: 80,
+                        yourRisk: '12.6%',
+                        averageRisk: '10.6%',
+                        chanceOfOutcome: 'Above Average'
+                    },
+                    infeccion_sitio_operatorio: {
+                        progressPercentage: 100,
+                        yourRisk: '15.6%',
+                        averageRisk: '20.6%',
+                        chanceOfOutcome: 'Below Average'
+                    },
+                    infeccion_via_urinaria: {
+                        progressPercentage: 20,
+                        yourRisk: '5.6%',
+                        averageRisk: '3.6%',
+                        chanceOfOutcome: 'Above Average'
+                    },
+                    neumotonia: {
+                        progressPercentage: 20,
+                        yourRisk: '5.6%',
+                        averageRisk: '3.6%',
+                        chanceOfOutcome: 'Above Average'
+                    },
+                    lesion_renal_aguda: {
+                        progressPercentage: 100,
+                        yourRisk: '15.6%',
+                        averageRisk: '20.6%',
+                        chanceOfOutcome: 'Below Average'
+                    }
+                };
+
+                return ok(riskDataByLabel);
             }
         });
     };

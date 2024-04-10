@@ -17,23 +17,15 @@
                 <v-card>
                     <v-card-title>Resultados de Evaluación</v-card-title>
                     <v-card-text>
-                        <RiskProgressBar label="Mortalidad" :progressPercentage="resultados.mortalidad"
-                            riskLimitPercentage="2" />
-                        <RiskProgressBar label="Complicaciones Mayores"
-                            :progressPercentage="resultados.complicacionesMayores" riskLimitPercentage="5" />
+                        <RiskProgressBar label="mortalidad" riskLimitPercentage="2"
+                            :progressPercentage="resultados.mortalidad" />
+                        <RiskProgressBar label="complicaciones_mayores" riskLimitPercentage="5"  />
                         <!-- Repetir para cada resultado calculado, ajustando los valores según necesidad -->
-                        <RiskProgressBar label="Reintervención Quirúrgica"
-                            :progressPercentage="resultados.ReintervencionQuirurgica" riskLimitPercentage=3 />
-                        <RiskProgressBar label="Infección Sitio Operatorio"
-                            :progressPercentage="resultados.InfeccionSitioOperatorio" riskLimitPercentage="4" />
-                        <RiskProgressBar label="Infección Vía Urinaria"
-                            :progressPercentage="resultados.InfecciónViaUrinaria" riskLimitPercentage="3" />
-                        <RiskProgressBar label="Neumonía" :progressPercentage="resultados.Neumonia"
-                            riskLimitPercentage="2" />
-                        <RiskProgressBar label="Lesión Renal Aguda" :progressPercentage="resultados.LesionRenalAguda"
-                            riskLimitPercentage="2" />
-                        <RiskProgressBar label="Estancia Hospitalaria"
-                            :progressPercentage="resultados.EstanciaHospitalaria" riskLimitPercentage="5" />
+                        <RiskProgressBar label="reintervencion_quirurgica" riskLimitPercentage="3" />
+                        <RiskProgressBar label="infeccion_sitio_operatorio" riskLimitPercentage="4" />
+                        <RiskProgressBar label="infeccion_via_urinaria" riskLimitPercentage="3" />
+                        <RiskProgressBar label="neumotonia" riskLimitPercentage="2" />
+                        <RiskProgressBar label="lesion_renal_aguda" riskLimitPercentage="2" />
 
                     </v-card-text>
                     <v-card-actions>
@@ -133,6 +125,8 @@ const obtenerResultados = () => {
         router.push('/login');
     }
 };
+
+
 
 onMounted(obtenerResultados);
 
