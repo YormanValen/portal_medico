@@ -19,7 +19,7 @@
                     <v-card-text>
                         <RiskProgressBar label="mortalidad" riskLimitPercentage="2"
                             :progressPercentage="resultados.mortalidad" />
-                        <RiskProgressBar label="complicaciones_mayores" riskLimitPercentage="5"  />
+                        <RiskProgressBar label="complicaciones_mayores" riskLimitPercentage="5" />
                         <!-- Repetir para cada resultado calculado, ajustando los valores según necesidad -->
                         <RiskProgressBar label="reintervencion_quirurgica" riskLimitPercentage="3" />
                         <RiskProgressBar label="infeccion_sitio_operatorio" riskLimitPercentage="4" />
@@ -89,14 +89,12 @@ import { useRouter } from 'vue-router';
 import RiskProgressBar from './riskProgressBar/RiskProgressBar.vue';
 import { computed } from 'vue';
 
+
 const datosUsuario = localStorage.getItem('datosUsuario') ? JSON.parse(localStorage.getItem('datosUsuario')) : null;
 
 const usuarioAutenticado = computed(() => {
     return Boolean(localStorage.getItem('user'));
 });
-
-console.log("usuarioAutenticado: ", usuarioAutenticado.value);
-
 
 const router = useRouter();
 const resultados = ref({
@@ -109,6 +107,8 @@ const resultados = ref({
     LesionRenalAguda: 5,
     EstanciaHospitalaria: 10,
 });
+
+
 
 // Esta función se puede ajustar para calcular los resultados reales
 const calcularResultados = () => {
@@ -130,6 +130,7 @@ const obtenerResultados = () => {
 
 onMounted(obtenerResultados);
 
+
 const verDetalles = () => {
     // Lógica para mostrar detalles adicionales
 };
@@ -143,4 +144,6 @@ const generarInforme = () => {
     // Lógica para generar un informe basado en los resultados
     router.push('/generateReport');
 };
+
+
 </script>

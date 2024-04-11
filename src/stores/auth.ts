@@ -4,6 +4,7 @@ import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
 
 const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 
+
 export const useAuthStore = defineStore({
     id: 'auth',
     state: () => ({
@@ -75,6 +76,7 @@ export const useAuthStore = defineStore({
         getUserDetails(username: string) {
             const users: Array<{ username: string }> = JSON.parse(localStorage.getItem('users') || '[]');
             return users.find((user: { username: string }) => user.username === username);
-        }
+        },
+        
     }
 });

@@ -1,6 +1,6 @@
 <!-- RiskProgressBar.vue -->
 <template>
-    <div class="risk-progress-container d-grid">
+    <div class="risk-progress-container d-grid gap-2 ":class="label">
         <div class="progress-label font-weight-bold d-flex justify-end gap-2">{{ label }}</div>
         <div class="risk-progress-bar">
             <div :style="{ width: progressPercentage + '%' }" class="progress-bar"
@@ -24,52 +24,38 @@
 </template>
 
 
-
 <script setup>
-import { defineProps, computed } from 'vue';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
+import { useReportStore } from '@/stores/reportStore';
+
 
 const props = defineProps({
     label: String,
     riskLimitPercentage: String
 });
 
-const isBelowAverage = computed(() => props.progressPercentage < props.riskLimitPercentage);
+const reportStore = useReportStore();
 
+// Estas son variables reactivas que se actualizarán una vez que la acción se complete.
 const progressPercentage = ref(0);
-const yourRiskText = ref('30');
-const averageRiskText = ref('20');
-const chanceOfOutcomeText = ref('Bellow Average');
+const yourRiskText = ref('N/A');
+const averageRiskText = ref('N/A');
+const chanceOfOutcomeText = ref('N/A');
 
-// Método para obtener los datos del backend
-const fetchRiskPercentages = async () => {
-    try {
-        const response = await fetch(`/fake-backend-endpoint/risk-percentages`, {});
-        console.log('Respuesta obtenida:', response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`); // Si la respuesta no es 2xx, lanza un error
-        }
-        const data = await response.json(); // Intenta parsear la respuesta como JSON
-        // Mapea la respuesta a tus variables reactivas
-        progressPercentage.value = data.progressPercentage;
-        yourRiskText.value = data.yourRisk;
-        averageRiskText.value = data.averageRisk;
-        chanceOfOutcomeText.value = data.chanceOfOutcome;
-        console.log('Porcentajes de riesgo obtenidos:', data);
-    } catch (error) {
-        console.error('Hubo un error al obtener los porcentajes de riesgo:', error);
-        // Aquí podrías manejar diferentes tipos de errores, por ejemplo:
-        if (error instanceof SyntaxError) {
-            console.error('La respuesta no es JSON válido:', error.message);
-        } else if (error instanceof Error) {
-            console.error('Error en la solicitud:', error.message);
-        }
+onMounted(async () => {
+    // Obtener los porcentajes de riesgo llamando a la acción del store.
+    const riskPercentages = await reportStore.getRiskPercentages();
+    // Ahora que tenemos la respuesta, podemos extraer los datos para la etiqueta específica.
+    const riskData = riskPercentages[props.label];
+
+    if (riskData) {
+        // Actualizar las variables reactivas con los datos de riesgo obtenidos.
+        progressPercentage.value = riskData.progressPercentage;
+        yourRiskText.value = riskData.yourRisk;
+        averageRiskText.value = riskData.averageRisk;
+        chanceOfOutcomeText.value = riskData.chanceOfOutcome;
     }
-};
-
-
-onMounted(fetchRiskPercentages);
+});
 </script>
 
 <style scoped>
@@ -79,7 +65,7 @@ onMounted(fetchRiskPercentages);
 
 .risk-progress-container {
     display: grid;
-    
+
     grid-template-columns: 16% 1fr 26%;
     align-items: center;
     margin-bottom: 1rem;
