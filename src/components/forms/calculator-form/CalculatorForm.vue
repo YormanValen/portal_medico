@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 
-
+const { t } = useI18n();
 const router = useRouter();
-
 const datosUsuario = ref(); // Inicializar como objeto vacío
 
 
@@ -70,39 +70,39 @@ const handleInestabilidadHemodinamicaChange = (newValue: boolean) => {
 
 //regla para el campo age que sea de 18 a 100 y tambien que es requerido y que sea un numero
 const ageRule = (v: string) => {
-    if (!v) return 'Edad es requerido';
-    if (Number(v) < 18 || Number(v) > 100) return ' Edad debe ser entre 18 y 100 años';
-    if (isNaN(Number(v))) return 'Edad debe ser un numero';
+    if (!v) return t('ageRequired');
+    if (Number(v) < 18 || Number(v) > 100) return t('ageMustBeBetween');
+    if (isNaN(Number(v))) return t('fieldMustBeNumber');
     return true;
 };
 
 const selectRule = (v: string) => {
-    if (!v) return 'Este campo es requerido';
+    if (!v) return t('fiedRequired');
     return true;
 };
 
 const pesoRule = (v: string) => {
-    if (!v) return 'Este campo es requerido';
-    if (isNaN(Number(v))) return 'Este campo debe ser un numero';
-    if (Number(v) < 40 || Number(v) > 400) return 'El peso debe estar entre 40 y 400';
+    if (!v) return t('fiedRequired');
+    if (isNaN(Number(v))) return t('fieldMustBeNumber');
+    if (Number(v) < 40 || Number(v) > 400) return t('weightMustBeInRange');
     return true;
 };
 
 const tallaRule = (v: string) => {
-    if (!v) return 'Este campo es requerido';
-    if (isNaN(Number(v))) return 'Este campo debe ser un numero';
-    if (Number(v) < 100 || Number(v) > 250) return 'La talla debe estar entre 100 y 250';
+    if (!v) return t('fiedRequired');
+    if (isNaN(Number(v))) return t('fieldMustBeNumber');
+    if (Number(v) < 100 || Number(v) > 250) return t('heightMustBeInRange');
     return true;
 };
 
 const inputNumberRule = (v: string) => {
-    if (!v) return ' Este campo es requerido';
-    if (isNaN(Number(v))) return ' Este campo debe ser un numero';
+    if (!v) return t('fiedRequired');
+    if (isNaN(Number(v))) return t('fieldMustBeNumber');
     return true;
 };
 
 const textFRequired = (v: string) => {
-    if (!v) return 'Este campo es requerido';
+    if (!v) return t('fiedRequired');
     return true;
 };
 
@@ -125,6 +125,29 @@ const validarCampos = () => {
         return false;
     }
 };
+
+const interventionItems = computed(() => [
+    t('preoperative'),
+    t('intraoperative'),
+    t('postoperative')
+]);
+
+const categoryItems = computed(() => [
+    t('minor'),
+    t('major')
+]);
+
+const typeOfSurgeryItems = computed(() => [
+    t('open'),
+    t('minimallyInvasive')
+]);
+
+const genderTypes = computed(() => [
+    t('male'),
+    t('female'),
+    t('other')
+]
+)
 
 // Método para continuar y guardar los valores
 const continuar = () => {
@@ -212,88 +235,83 @@ onMounted(cargarDatosUsuario);
         <v-row>
 
             <v-col>
-                <v-label class="mb-2 font-weight-medium">Edad</v-label>
-                <v-text-field v-model="edad" :rules="[ageRule]" variant="outlined" placeholder=" Ingrese su edad"
-                    color="success"></v-text-field>
-                <v-label class="mb-2 font-weight-medium">Genero</v-label>
-                <v-select v-model="genero" :rules="[selectRule]" :items="['Male', 'Female', 'Other']" variant="outlined"
+                <v-label class="mb-2 font-weight-medium">{{ $t('age') }}</v-label>
+                <v-text-field v-model="edad" :rules="[ageRule]" variant="outlined" color="success"></v-text-field>
+                <v-label class="mb-2 font-weight-medium">{{ $t('gender') }}</v-label>
+                <v-select v-model="genero" :rules="[selectRule]" :items="genderTypes" variant="outlined"
                     placeholder="Select Gender" color="primary"></v-select>
-                <v-label class="mb-2 font-weight-medium">Condiciones médicas:</v-label>
+                <v-label class="mb-2 font-weight-medium">{{ $t('medicalConditions') }}</v-label>
                 <v-row>
                     <v-col>
 
-                        <v-checkbox v-model="tabaco" label="Tabaco" @change="handleTabacoChange(tabaco)"></v-checkbox>
-                        <v-checkbox v-model="hipertension" label="Hipertensión Arterial"
+                        <v-checkbox v-model="tabaco" :label="$t('tobacco')"
+                            @change="handleTabacoChange(tabaco)"></v-checkbox>
+                        <v-checkbox v-model="hipertension" :label="$t('highBloodPressure')"
                             @change="handleHipertensionChange(hipertension)"></v-checkbox>
-                        <v-checkbox v-model="arritmia" label="Arritmia Cardiaca"
+                        <v-checkbox v-model="arritmia" :label="$t('cardiacArrhythmia')"
                             @change="handleArritmiaChange(arritmia)"></v-checkbox>
+                        <v-checkbox v-model="erc" :label="$t('CKD')" @change="handleErcChange(erc)"></v-checkbox>
+
+
                     </v-col>
                     <v-col>
-                        <v-checkbox v-model="fallaCardiaca" label="Falla Cardiaca"
+                        <v-checkbox v-model="fallaCardiaca" :label="$t('heartFailure')"
                             @change="handleFallaCardiacaChange(fallaCardiaca)"></v-checkbox>
-                        <v-checkbox v-model="diabetes" label="Diabetes"
+                        <v-checkbox v-model="diabetes" :label="$t('diabetes')"
                             @change="handleDiabetesChange(diabetes)"></v-checkbox>
-                        <v-checkbox v-model="epoc" label="EPOC" @change="handleEpocChange(epoc)"></v-checkbox>
+                        <v-checkbox v-model="epoc" :label="$t('COPD')" @change="handleEpocChange(epoc)"></v-checkbox>
+                        <v-checkbox v-model="inestabilidadHemodinamica" :label="$t('hemodynamicInstability')"
+                            @change="handleInestabilidadHemodinamicaChange(inestabilidadHemodinamica)"></v-checkbox>
+
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-label class="mb-2 font-weight-medium">Peso (en Kg)</v-label>
+                        <v-label class="mb-2 font-weight-medium">{{ $t('weightKg') }}</v-label>
                         <v-text-field v-model="peso" :rules="[pesoRule]" variant="outlined"
-                            placeholder="Ingrese su peso" color="success"></v-text-field>
-                        <v-label class="mb-2 font-weight-medium">Talla (en cm)</v-label>
+                            color="success"></v-text-field>
+                        <v-label class="mb-2 font-weight-medium">{{ $t('heightCm') }}</v-label>
                         <v-text-field v-model="talla" :rules="[tallaRule]" variant="outlined"
-                            placeholder="Ingrese su talla" color="success"></v-text-field>
-                        <v-label class="mb-2 font-weight-medium">Indice de masa corporal (IMC)</v-label>
-                        <v-text-field v-model="imc" variant="outlined" placeholder="IMC" color="success"
-                            readonly></v-text-field>
+                            color="success"></v-text-field>
                     </v-col>
                 </v-row>
             </v-col>
 
             <v-col>
+                <v-label class="mb-2 font-weight-medium">{{ $t('BMI') }}</v-label>
+                <v-text-field v-model="imc" variant="outlined" color="success" readonly></v-text-field>
 
 
-                <v-label class="mb-2 font-weight-medium">Momento de la intervención</v-label>
-                <v-select v-model="momentoIntervencion" :rules="[selectRule]"
-                    :items="['Preoperatorio', 'Intraoperatorio', 'Postoperatorio']"></v-select>
+                <v-label class="mb-2 font-weight-medium">{{ $t('interventionTime') }}</v-label>
+                <v-select v-model="momentoIntervencion" :rules="[selectRule]" :items="interventionItems"
+                    placeholder="Select Intervention Time"></v-select>
 
-                <v-label class="mb-2 font-weight-medium">ERC (Enfermedad renal crónica)</v-label>
-                <v-checkbox v-model="erc" label="" @change="handleErcChange(erc)"></v-checkbox>
 
-                <v-label class="mb-2 font-weight-medium">Inestabilidad hemodinámica</v-label>
-                <v-checkbox v-model="inestabilidadHemodinamica"
-                    @change="handleInestabilidadHemodinamicaChange(inestabilidadHemodinamica)"></v-checkbox>
-
-                <v-label class="mb-2 font-weight-medium">Categoría de la cirugía </v-label>
-                <v-select v-model="categoriaCirugia" :rules="[selectRule]" :items="['Menor', 'Mayor']"
+                <v-label class="mb-2 font-weight-medium">{{ $t('surgeryCategory') }} </v-label>
+                <v-select v-model="categoriaCirugia" :rules="[selectRule]" :items="categoryItems"
                     color="primary"></v-select>
 
 
-                <v-label class="mb-2 font-weight-medium">CUPS del procedimiento</v-label>
-                <v-text-field v-model="cupsProcedimiento" placeholder="ingrese CUPS del procedimiento"
-                    :rules="[textFRequired]" label=""></v-text-field>
+                <v-label class="mb-2 font-weight-medium">{{ $t('CUPSProcedure') }}</v-label>
+                <v-text-field v-model="cupsProcedimiento" :rules="[textFRequired]" label=""></v-text-field>
 
-                <v-label class="mb-2 font-weight-medium">Tipo de abordaje quirúrgico</v-label>
-                <v-select v-model="tipoAbordajeQuirurgico" :rules="[selectRule]"
-                    :items="['Abierto', 'Mínimamente invasivo']"></v-select>
+                <v-label class="mb-2 font-weight-medium">{{ $t('surgicalApproach') }}</v-label>
+                <v-select v-model="tipoAbordajeQuirurgico" :rules="[selectRule]" :items="typeOfSurgeryItems"></v-select>
 
-                <v-label class="mb-2 font-weight-medium">Afiliación al sistema de salud</v-label>
-                <v-text-field v-model="afiliacionSalud" :rules="[textFRequired]" riant="outlined"
-                    placeholder="Afiliación al sistema de salud"></v-text-field>
+                <v-label class="mb-2 font-weight-medium">{{ $t('healthSystemAffiliation') }}</v-label>
+                <v-text-field v-model="afiliacionSalud" :rules="[textFRequired]" riant="outlined"></v-text-field>
 
-                <v-label class="mb-2 font-weight-medium">ASA Score</v-label>
-                <v-text-field v-model="asaScore" :rules="[textFRequired]" variant="outlined"
-                    placeholder="ingrese ASA Score"></v-text-field>
+                <v-label class="mb-2 font-weight-medium">{{ $t('ASAScore') }}</v-label>
+                <v-text-field v-model="asaScore" :rules="[textFRequired]" variant="outlined"></v-text-field>
 
-                <v-label class="mb-2 font-weight-medium">Complejidad del procedimiento</v-label>
-                <v-text-field v-model="complejidadProcedimiento" :rules="[textFRequired]" variant="outlined"
-                    placeholder="Complejidad del procedimiento"></v-text-field>
+                <v-label class="mb-2 font-weight-medium">{{ $t('procedureComplexity') }}</v-label>
+                <v-text-field v-model="complejidadProcedimiento" :rules="[textFRequired]"
+                    variant="outlined"></v-text-field>
 
             </v-col>
         </v-row>
         <v-row class="mt-4 d-flex align-center justify-center">
-            <v-btn color="primary" @click="continuar">Continuar</v-btn>
+            <v-btn color="primary" @click="continuar">{{ $t('continue') }}</v-btn>
         </v-row>
     </v-container>
 

@@ -4,9 +4,9 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title>Detalles del Procedimiento</v-card-title>
+                    <v-card-title>{{ $t('procedureDetails') }}</v-card-title>
                     <v-card-text>
-                        <div><strong>Procedimiento:</strong> {{ datosUsuario.cupsProcedimiento }} - {{
+                        <div><strong>{{ $t('procedure') }}</strong> {{ datosUsuario.cupsProcedimiento }} - {{
         datosUsuario.categoriaCirugia }}</div>
                     </v-card-text>
                 </v-card>
@@ -15,23 +15,22 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title>Resultados de Evaluación</v-card-title>
+                    <v-card-title>{{ $t('evaluationResults') }}</v-card-title>
                     <v-card-text>
-                        <RiskProgressBar label="mortalidad" riskLimitPercentage="2"
-                            :progressPercentage="resultados.mortalidad" />
-                        <RiskProgressBar label="complicaciones_mayores" riskLimitPercentage="5" />
+                        <RiskProgressBar name="mortalidad" :label="$t('mortality')" riskLimitPercentage="2" />
+                        <RiskProgressBar name="complicaciones_mayores" :label="$t('majorComplications')" riskLimitPercentage="5" />
                         <!-- Repetir para cada resultado calculado, ajustando los valores según necesidad -->
-                        <RiskProgressBar label="reintervencion_quirurgica" riskLimitPercentage="3" />
-                        <RiskProgressBar label="infeccion_sitio_operatorio" riskLimitPercentage="4" />
-                        <RiskProgressBar label="infeccion_via_urinaria" riskLimitPercentage="3" />
-                        <RiskProgressBar label="neumotonia" riskLimitPercentage="2" />
-                        <RiskProgressBar label="lesion_renal_aguda" riskLimitPercentage="2" />
+                        <RiskProgressBar name="reintervencion_quirurgica" :label="$t('surgicalReintervention')" riskLimitPercentage="3" />
+                        <RiskProgressBar name="infeccion_sitio_operatorio" :label="$t('surgicalSiteInfection')" riskLimitPercentage="4" />
+                        <RiskProgressBar name="infeccion_via_urinaria" :label="$t('urinaryTractInfection')" riskLimitPercentage="3" />
+                        <RiskProgressBar name="neumotonia" :label="$t('pneumonia')" riskLimitPercentage="2" />
+                        <RiskProgressBar name="lesion_renal_aguda" :label="$t('acuteRenalInjury')" riskLimitPercentage="2" />
 
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="verDetalles">Ver Detalles</v-btn>
-                        <v-btn color="secondary" @click="modificarDatos">Modificar Datos</v-btn>
-                        <v-btn color="primary" @click="generarInforme">Generar informe</v-btn>
+                        <v-btn color="primary" @click="verDetalles">{{ $t('viewDetails') }}</v-btn>
+                        <v-btn color="secondary" @click="modificarDatos">{{ $t('modifyData') }}</v-btn>
+                        <v-btn color="primary" @click="generarInforme">{{ $t('generateReport') }}</v-btn>
 
                     </v-card-actions>
                 </v-card>
@@ -43,9 +42,9 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title>Detalles del Procedimiento</v-card-title>
+                    <v-card-title>{{ $t('procedureDetails') }}</v-card-title>
                     <v-card-text>
-                        <div><strong>Procedimiento:</strong> {{ datosUsuario.cupsProcedimiento }} - {{
+                        <div><strong>{{ $t('procedure') }}</strong> {{ datosUsuario.cupsProcedimiento }} - {{
         datosUsuario.categoriaCirugia }}</div>
                     </v-card-text>
                 </v-card>
@@ -54,26 +53,25 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title>Resultados de Evaluación</v-card-title>
+                    <v-card-title>{{ $t('evaluationResults') }}</v-card-title>
                     <v-card-text>
-                        <RiskProgressBar label="Mortalidad" :progressPercentage="resultados.mortalidad"
+                        <RiskProgressBar :label="$t('mortality')" :progressPercentage="resultados.mortalidad"
                             riskLimitPercentage="2" />
 
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="verDetalles">Ver Detalles</v-btn>
-                        <v-btn color="secondary" @click="modificarDatos">Modificar Datos</v-btn>
+                        <v-btn color="primary" @click="verDetalles">{{ $t('viewDetails') }}</v-btn>
+                        <v-btn color="secondary" @click="modificarDatos">{{ $t('modifyData') }}</v-btn>
 
                     </v-card-actions>
                 </v-card>
                 <div class="text-center mt-10 ">
-                    <p>Si deseas ver todos los resultados, por favor <strong>regístrate</strong> o <strong>inicia
-                            sesión</strong>.</p>
+                    <p>{{ $t('registerPrompt') }}</p>
                     <router-link :to="{ name: 'Boxed Register' }">
-                        <v-btn color="success" class="mt-5 mr-2">Registrarse</v-btn>
+                        <v-btn color="success" class="mt-5 mr-2">{{ $t('register') }}</v-btn>
                     </router-link>
                     <router-link :to="{ name: 'Boxed Login' }">
-                        <v-btn color="primary" class="mt-5">Iniciar sesión</v-btn>
+                        <v-btn color="primary" class="mt-5">{{ $t('login') }}</v-btn>
                     </router-link>
                 </div>
 

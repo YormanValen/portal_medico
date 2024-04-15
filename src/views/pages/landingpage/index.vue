@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import Header from '@/components/landingpage/layout/Header.vue';
+import AnuncioDestacado from '@/components/landingpage/section/anuncioDestacado.vue';
+
 import MainBanner from '@/components/landingpage/section/mainBanner.vue';
 import OurProducts from '@/components/landingpage/section/ourProducts.vue';
 import FrameWorks from '@/components/landingpage/section/frameWorks.vue';
@@ -24,15 +26,17 @@ onMounted(() => {
         <!--Header-->
         <Header />
 
+        <AnuncioDestacado />
         <!----------->
-        <!--Content-->
+        <!--Content
         <MainBanner />
+         <UserReview />
         <OurProducts />
         <FrameWorks />
-        <UserReview />
+        
         <Features />
         <AskQuestion />
-        <BuyNow />
+        <BuyNow />-->
         <!----------->
         <!--Footer-->
         <Footer />

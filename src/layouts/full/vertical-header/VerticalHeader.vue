@@ -9,6 +9,7 @@ import ProfileDD from './ProfileDD.vue';
 import Searchbar from './Searchbar.vue';
 import RightMobileSidebar from './RightMobileSidebar.vue';
 import Navigations from './Navigations.vue';
+import Logo from '../logo/Logo.vue';
 
 const customizer = useCustomizerStore();
 const showSearch = ref(false);
@@ -30,8 +31,12 @@ const getCart = computed(() => {
 
 <template>
     <v-app-bar elevation="0" :priority="priority" height="70" class="">
+        <v-row class="header__ctn d-flex ">
+            <!-- Logo -->
+            <Logo />
 
-        <!--Menu btn
+
+            <!--Menu btn
              <v-btn
             class="hidden-md-and-down"
             icon
@@ -41,76 +46,70 @@ const getCart = computed(() => {
         >
             <Menu2Icon size="20" stroke-width="1.5" />
         </v-btn> -->
-        <v-btn class="hidden-lg-and-up" icon variant="flat" @click.stop="customizer.SET_SIDEBAR_DRAWER" size="small">
-            <Menu2Icon size="20" stroke-width="1.5" />
-        </v-btn>
 
-        <!-- search mobile -->
-        <!-- <v-btn class="hidden-lg-and-up ml-3" icon variant="text" color="primary" @click="searchbox">
+
+            <!-- search mobile -->
+            <!-- <v-btn class="hidden-lg-and-up ml-3" icon variant="text" color="primary" @click="searchbox">
             <SearchIcon size="17" stroke-width="1.5" />
         </v-btn> -->
 
-        <!-- <v-sheet v-if="showSearch" class="search-sheet v-col-12">
+            <!-- <v-sheet v-if="showSearch" class="search-sheet v-col-12">
             <Searchbar :closesearch="searchbox" />
         </v-sheet> -->
 
-        <!-- ---------------------------------------------- -->
-        <!-- Search part -->
-        <!-- ---------------------------------------------- -->
-        <!-- <v-sheet>
+            <!-- ---------------------------------------------- -->
+            <!-- Search part -->
+            <!-- ---------------------------------------------- -->
+            <!-- <v-sheet>
             <Searchbar />
         </v-sheet> -->
 
-        <!---/Search part -->
+            <!---/Search part -->
 
-        <!-- ---------------------------------------------- -->
-        <!-- Mega menu -->
-        <!-- ---------------------------------------------- -->
-        <div class="hidden-md-and-down">
-            <Navigations />
-        </div>
-        <v-spacer />
-        <!-- ---------------------------------------------- -->
-        <!---right part -->
-        <!-- ---------------------------------------------- -->
-        <!-- ---------------------------------------------- -->
-        <!-- translate -->
-        <!-- ---------------------------------------------- -->
-        <LanguageDD />
+            <!-- ---------------------------------------------- -->
+            <!-- Mega menu -->
+            <!-- ---------------------------------------------- -->
+            <div class="hidden-md-and-down">
+                <Navigations />
+            </div>
+            <!-- ---------------------------------------------- -->
+            <!---right part -->
+            <!-- ---------------------------------------------- -->
+            <!-- ---------------------------------------------- -->
 
-        
 
-        <!-- ---------------------------------------------- -->
-        <!-- ShoppingCart -->
-        <!-- ---------------------------------------------- -->
-       <!--  <v-btn icon variant="text" color="primary" to="/ecommerce/checkout">
+
+
+            <!-- ---------------------------------------------- -->
+            <!-- ShoppingCart -->
+            <!-- ---------------------------------------------- -->
+            <!--  <v-btn icon variant="text" color="primary" to="/ecommerce/checkout">
             <v-badge  color="error" :content="getCart?.length">
                 <ShoppingCartIcon stroke-width="1.5" size="22" />
             </v-badge>
         </v-btn> -->
 
-        <!-- ---------------------------------------------- -->
-        <!-- Notification -->
-        <!-- ---------------------------------------------- -->
-        <!-- <NotificationDD /> -->
+            <!-- ---------------------------------------------- -->
+            <!-- Notification -->
+            <!-- ---------------------------------------------- -->
+            <!-- <NotificationDD /> -->
+            <!-- translate -->
+            <!-- ---------------------------------------------- -->
+            <div class="ml-2">
+                <LanguageDD />
+                <!-- right sidebar -->
+                <v-btn variant="text" color="primary" class="hidden-lg-and-up" icon
+                    @click.stop="appsdrawer = !appsdrawer">
+                    <GridDotsIcon size="17" stroke-width="1.5" />
+                </v-btn>
 
-        <!-- right sidebar -->
-        <v-btn
-            variant="text"
-            color="primary"
-            class="hidden-lg-and-up"
-            icon
-            @click.stop="appsdrawer = !appsdrawer"
-        >
-            <GridDotsIcon size="17" stroke-width="1.5" />
-        </v-btn>
+                <!-- ---------------------------------------------- -->
+                <!-- User Profile -->
+                <!-- ---------------------------------------------- -->
 
-        <!-- ---------------------------------------------- -->
-        <!-- User Profile -->
-        <!-- ---------------------------------------------- -->
-        <div class="ml-2">
-            <ProfileDD />
-        </div>
+                <ProfileDD />
+            </div>
+        </v-row>
     </v-app-bar>
 
     <!-- ---------------------------------------------- -->
@@ -120,3 +119,9 @@ const getCart = computed(() => {
         <RightMobileSidebar />
     </v-navigation-drawer>
 </template>
+
+<style lang="scss" scoped>
+.header__ctn {
+    justify-content: space-between
+}
+</style>

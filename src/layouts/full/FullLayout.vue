@@ -5,6 +5,7 @@ import VerticalHeaderVue from './vertical-header/VerticalHeader.vue';
 import HorizontalHeader from './horizontal-header/HorizontalHeader.vue';
 import HorizontalSidebar from './horizontal-sidebar/HorizontalSidebar.vue';
 import Customizer from './customizer/Customizer.vue';
+import Header from '../../components/landingpage/layout/Header.vue'; 
 import { useCustomizerStore } from '../../stores/customizer';
 
 const customizer = useCustomizerStore();
@@ -27,8 +28,8 @@ const customizer = useCustomizerStore();
             <Customizer />
             </v-navigation-drawer>
             <VerticalSidebarVue v-if="!customizer.setHorizontalLayout" />
-            <VerticalHeaderVue v-if="!customizer.setHorizontalLayout" />
-            <HorizontalHeader v-if="customizer.setHorizontalLayout" />
+            <Header v-if="!customizer.setHorizontalLayout" />
+            <Header v-if="customizer.setHorizontalLayout" />
             <HorizontalSidebar v-if="customizer.setHorizontalLayout" />
 
             <v-main>
@@ -69,8 +70,8 @@ const customizer = useCustomizerStore();
             
             <!-- sidebar menu
                 <VerticalSidebarVue v-if="!customizer.setHorizontalLayout" /> -->
-            <VerticalHeaderVue v-if="!customizer.setHorizontalLayout" />
-            <HorizontalHeader v-if="customizer.setHorizontalLayout" />
+            <Header v-if="!customizer.setHorizontalLayout" />
+            <Header v-if="customizer.setHorizontalLayout" />
             <HorizontalSidebar v-if="customizer.setHorizontalLayout" />
 
             <v-main>

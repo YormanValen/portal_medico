@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 
 const fakeRiskPercentages = {
+ 
+    
     mortalidad: {
         progressPercentage: 10, // Supongamos que este es el porcentaje de progreso
         yourRisk: '3.6%', // Tu Riesgo

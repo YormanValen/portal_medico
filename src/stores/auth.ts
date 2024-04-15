@@ -34,7 +34,7 @@ export const useAuthStore = defineStore({
                 console.log('data', data);
 
                 localStorage.setItem('user', JSON.stringify(userDetails)); // Guardar el usuario en localStorage.
-                router.push(this.returnUrl || '/advertising');
+                router.push(this.returnUrl || '/');
             } catch (error) {
                 console.error('Login error:', (error as Error).message || error);
                 // Aquí manejarías el error, como mostrar un mensaje al usuario.

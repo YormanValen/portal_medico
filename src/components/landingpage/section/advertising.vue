@@ -23,8 +23,7 @@ const isChecked = ref(false);
                     <div class="d-flex flex-column align-center">
                         <div class="d-flex">
                             <v-checkbox-btn v-model="isChecked"></v-checkbox-btn>
-                            <v-label>I have read the disclaimer and risk calculator permited use the statements
-                                below</v-label>
+                            <v-label>{{ $t('disclaimerAndUsage') }}</v-label>
                         </div>
                         <v-btn :disabled="!isChecked" to="/calculator" color="primary">continue</v-btn>
                     </div>
@@ -42,7 +41,5 @@ const isChecked = ref(false);
 </template>
 
 <style lang="scss" scoped>
-.v-container {
-
-}
+.v-container {}
 </style>

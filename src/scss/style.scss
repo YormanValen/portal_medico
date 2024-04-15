@@ -11,6 +11,7 @@
 @import './layout/dark';
 @import './layout/customizer';
 
+
 @import './components/VBreadcrumb';
 @import './components/VAlert';
 @import './components/VButtons';
@@ -29,6 +30,7 @@
 @import './components/VTable';
 @import './components/VExpansionpanel';
 
+
 /*Landing page css*/
 @import 'landingpage/header';
 @import 'landingpage/general';
@@ -38,6 +40,7 @@
 @import './pages/editor';
 @import './pages/authentication';
 @import './pages/apps';
+
 
 @import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css';
 

@@ -6,9 +6,9 @@ const AuthRoutes = {
     },
     children: [
         {
-            name: 'Login',
+            name: 'Landing Page',
             path: '/',
-            component: () => import('@/views/authentication/BoxedLogin.vue')
+            component: () => import('@/views/pages/landingpage/index.vue')
         },
         {
             name: 'Side Login',

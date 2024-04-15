@@ -8,15 +8,15 @@
         </div>
         <div class="progress-text d-flex gap-3">
             <div class="your-risk d-flex flex-column align-center">
-                <span class="font-weight-bold text-primary">Your Risk</span>
+                <span class="font-weight-bold text-primary">{{ $t('yourRisk') }}</span>
                 <span class="font-weight-bold">{{ yourRiskText }}</span>
             </div>
             <div class="average-risk d-flex flex-column align-center ">
-                <span class="font-weight-bold text-primary">Average Risk</span>
+                <span class="font-weight-bold text-primary">{{ $t('averageRisk') }}</span>
                 <span class="font-weight-bold">{{ averageRiskText }}</span>
             </div>
             <div class="chance-outcome d-flex flex-column align-center">
-                <span class="font-weight-bold text-primary">Chance of out come</span>
+                <span class="font-weight-bold text-primary">{{ $t('chanceOfCome') }}</span>
                 <span class="font-weight-bold">{{ chanceOfOutcomeText }}</span>
             </div>
         </div>
@@ -31,7 +31,8 @@ import { useReportStore } from '@/stores/reportStore';
 
 const props = defineProps({
     label: String,
-    riskLimitPercentage: String
+    riskLimitPercentage: String,
+    name: String,
 });
 
 const reportStore = useReportStore();
@@ -43,10 +44,12 @@ const averageRiskText = ref('N/A');
 const chanceOfOutcomeText = ref('N/A');
 
 onMounted(async () => {
+
+    console.log(props.name)
     // Obtener los porcentajes de riesgo llamando a la acción del store.
     const riskPercentages = await reportStore.getRiskPercentages();
     // Ahora que tenemos la respuesta, podemos extraer los datos para la etiqueta específica.
-    const riskData = riskPercentages[props.label];
+    const riskData = riskPercentages[props.name];
 
     if (riskData) {
         // Actualizar las variables reactivas con los datos de riesgo obtenidos.
@@ -66,7 +69,7 @@ onMounted(async () => {
 .risk-progress-container {
     display: grid;
 
-    grid-template-columns: 16% 1fr 26%;
+    grid-template-columns: 16% 1fr 30%;
     align-items: center;
     margin-bottom: 1rem;
 }

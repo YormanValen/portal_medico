@@ -5,34 +5,34 @@
             <v-col cols="12">
                 <v-card>
                     <v-card-title>
-                        Seleccionar datos para el informe
+                        {{ $t('titleReport') }}
                     </v-card-title>
                     <v-card-text>
-                        <v-checkbox v-model="reportOptions.mortalidad" label="Mortalidad"></v-checkbox>
+                        <v-checkbox v-model="reportOptions.mortalidad" :label="$t('mortality')"></v-checkbox>
                         <v-checkbox v-model="reportOptions.complicacionesMayores"
-                            label="Complicaciones Mayores"></v-checkbox>
+                        :label="$t('majorComplications')"></v-checkbox>
                         <v-checkbox v-model="reportOptions.reintervencionQuirurgica"
-                            label="Reintervención Quirúrgica"></v-checkbox>
+                        :label="$t('surgicalReintervention')"></v-checkbox>
                         <v-checkbox v-model="reportOptions.infeccionSitioOperatorio"
-                            label="Infección del Sitio Operatorio"></v-checkbox>
+                        :label="$t('surgicalSiteInfection')"></v-checkbox>
                         <v-checkbox v-model="reportOptions.infeccionViaUrinaria"
-                            label="Infección Vía Urinaria"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.neumonia" label="Neumonía"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.lesionRenalAguda" label="Lesión Renal Aguda"></v-checkbox>
+                        :label="$t('urinaryTractInfection')"></v-checkbox>
+                        <v-checkbox v-model="reportOptions.neumonia" :label="$t('pneumonia')"></v-checkbox>
+                        <v-checkbox v-model="reportOptions.lesionRenalAguda" :label="$t('acuteRenalInjury')"></v-checkbox>
 
                     </v-card-text>
                     <v-card-text>
-                        <v-text-field v-model="email" label="Correo Electrónico a enviar el informe"></v-text-field>
-                        <v-btn color="info" @click="enviarCorreo">Enviar</v-btn>
+                        <v-text-field v-model="email" :label="$t('emailLabel')"></v-text-field>
+                        <v-btn color="info" @click="enviarCorreo">{{ $t('send') }}</v-btn>
 
                     </v-card-text>
 
                     <v-card-actions>
-                        <v-btn color="primary" @click="generarInforme">Previsualizar Reporte</v-btn>
-                        <v-btn color="success" @click="generarInforme">Generar Reporte</v-btn>
-                        <v-btn color="success" @click="regresar">Volver a los resultados</v-btn>
+                        <v-btn color="primary" @click="generarInforme">{{ $t('prevReport') }}</v-btn>
+                        <v-btn color="success" @click="generarInforme">{{ $t('generateReport') }}</v-btn>
+                        <v-btn color="success" @click="regresar">{{ $t('backResults') }}</v-btn>
                         <!-- Botón para enviar al paciente -->
-                        <v-btn color="info" @click="enviarPaciente">Enviar al Paciente</v-btn>
+                        <v-btn color="info" @click="enviarPaciente">{{ $t('sendToPatient') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
