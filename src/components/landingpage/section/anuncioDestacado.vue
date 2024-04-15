@@ -11,33 +11,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const items = ref([]);
+const items = ref([
+    { src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg' },
+    { src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg' },
+    { src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg' },
+    { src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg' },
+]);
 
 function exploreMore() {
     console.log('Implementa la lógica para explorar más contenido o cambiar de vista.');
 }
 
-onMounted(async () => {
-    try {
-        const response = await fetch(`https://api.unsplash.com/photos/random?client_id=9zoQTqr14ZFUs-pEnNtzaktrbrCYN7M2Jk0c5_RymdA&count=3`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log(data);  // Imprime la data para ver su estructura
 
-        if (Array.isArray(data)) { // Asegúrate de que data sea un array
-            items.value = data.map(img => ({
-                src: img.urls.regular,
-                author: `Foto por ${img.user.name}`
-            }));
-        } else {
-            console.error('La respuesta no es un array:', data);
-        }
-    } catch (error) {
-        console.error('Error fetching images:', error);
-    }
-});
 
 </script>
 <style>

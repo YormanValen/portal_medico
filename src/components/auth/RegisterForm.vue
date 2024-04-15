@@ -1,4 +1,3 @@
-import { useRouter } from 'vue-router'
 <script setup lang="ts">
 import { ref } from 'vue';
 
@@ -7,6 +6,9 @@ import { ref } from 'vue';
 import google from '@/assets/images/svgs/google-icon.svg';
 import facebook from '@/assets/images/svgs/facebook-icon.svg';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 /*Components*/
 const checkbox = ref(false);
@@ -26,7 +28,7 @@ const agreeToPrivacyPolicy = ref(false); // Para manejar el estado del checkbox
 
 
 
-const especialities = ref(["Foo", "Bar", "Fizz", "Buzz"]);
+const especialities = ref(["Foo"]);
 const router = useRouter();
 
 
@@ -73,7 +75,7 @@ const chargeRules = ref([
 const submitRegistration = () => {
 
     if (!valid.value) {
-        apiError.value = 'Por favor, rellene el formulario correctamente.';
+        apiError.value = t('formError');
         return; // Detiene la función si el formulario no es válido.
     }
 
@@ -117,62 +119,59 @@ const submitRegistration = () => {
         <v-col cols="6" sm="6">
             <v-btn variant="outlined" size="large" class="border text-subtitle-1" block>
                 <img :src="google" height="20" class="mr-2" alt="google" />
-                <span class="d-sm-flex d-none mr-1">Sign up with</span>Google
+                <span class="d-sm-flex d-none mr-1">{{ $t('signInGoogle') }}</span>
             </v-btn>
         </v-col>
         <v-col cols="6" sm="6">
             <v-btn variant="outlined" size="large" class="border text-subtitle-1" block>
                 <img :src="facebook" width="25" height="30" class="mr-1" alt="facebook" />
-                <span class="d-sm-flex d-none mr-1">Sign up with</span>FB
+                <span class="d-sm-flex d-none mr-1">{{ $t('signInFB') }}</span>
             </v-btn>
         </v-col>
     </v-row>
     <div class="d-flex align-center text-center mb-6">
         <div class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative">
-            <span class="bg-surface px-5 py-3 position-relative">or sign in with</span>
+            <span class="bg-surface px-5 py-3 position-relative">{{ $t('orSignIn') }}</span>
         </div>
     </div>
     <v-form ref="form" v-model="valid" lazy-validation @submit="" action="/pages/boxedlogin" class="mt-5">
         <v-row>
             <v-col>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Name</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('name') }}</v-label>
                 <VTextField v-model="fname" :rules="fnameRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Email Adddress</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('Email') }}</v-label>
                 <VTextField v-model="email" :rules="emailRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Password</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('password') }}</v-label>
                 <VTextField type="password" v-model="password" :rules="passwordRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Country</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('country') }}</v-label>
                 <VTextField v-model="country" :rules="countryRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">City</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('city') }}</v-label>
                 <VTextField v-model="city" :rules="cityRules" required></VTextField>
             </v-col>
             <v-col>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Especiality</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especiality') }}</v-label>
                 <v-select :items="especialities" v-model="especiality" label="Select Item" required></v-select>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Years of Experience</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('yearsExperience') }}</v-label>
                 <VTextField v-model="yearsOfExperience" :rules="yearsOfExperienceRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Orcid</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('orcid') }}</v-label>
                 <VTextField v-model="orcid" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Charge</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('charge') }}</v-label>
                 <VTextField v-model="charge" required></VTextField>
             </v-col>
         </v-row>
         <v-row>
             <v-checkbox v-model="agreeToPrivacyPolicy"
-                :rules="[v => v || 'Debes aceptar las políticas de privacidad para continuar']"
-                class="mb-3 privacy-checkbox">
+                :rules="[v => v || t('advertisingPrivacyPolicy')]"
+                class="mb-3 w-100 privacy-checkbox">
                 <template v-slot:label>
                     <div class="d-flex align-center justify-content-between">
-                        <span class="flex-grow-1 ">Tus datos son muy importantes para nosotros y los tratamos con la máxima seguridad y
-                            confidencialidad. ¿Aceptas nuestras <RouterLink class="link-privacy-policy" color="primary" to="/privacy-policy">políticas de
-                                privacidad?</RouterLink> </span>
+                        <span class="flex-grow-1 ">{{ $t('privacyText') }}<RouterLink class="link-privacy-policy" color="primary" to="/privacy-policy">{{ $t('privacyPolicy') }}</RouterLink> </span>
                     </div>
                 </template>
             </v-checkbox>
         </v-row>
 
-        <v-btn size="large" @click.prevent="submitRegistration" class="mt-2" color="primary" block submit flat>Sign
-            up
+        <v-btn size="large" @click.prevent="submitRegistration" class="mt-2" color="primary" block submit flat>{{ $t('Sign Up') }}
         </v-btn>
 
         <div v-if="apiError" class="mt-2 alert-box">

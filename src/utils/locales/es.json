@@ -163,7 +163,34 @@
     "sendToPatient":"Enviar al paciente",
     "userProfile":"Perfil de Usuario",
     "logout":"Cerrar Sesión",
-    "actionRequired":" Acción Requerida"
+    "actionRequired":" Acción Requerida",
+    "signInGoogle":"Iniciar Sesión con Google",
+    "signInFB":"Iniciar Sesión con Facebook",
+    "orSignIn":"O inicia sesión con",
+    "username":"Nombre de Usuario",
+    "password":"Contraseña",
+    "rememberDevice":"Recordar este dispositivo",
+    "signIn":"Iniciar Sesión",
+    "createAccount":"Crear Cuenta",
+    "emailRequired":"El correo electrónico es requerido",
+    "emailInvalid":"El correo electrónico es inválido",
+    "passwordLength":"La contraseña debe tener al menos 10 caracteres",
+    "passwordRequired":"La contraseña es requerida",
+    "name":"Nombre",
+    "country":"País",
+    "city":"Ciudad",
+    "especiality":"Especialidad",
+    "yearsExperience":"Años de Experiencia",
+    "orcid":"ORCID",
+    "charge":"Cargo",
+    "privacyText":"Aceptas las ",
+    "privacyPolicy":"Política de Privacidad?",
+    "advertisingPrivacyPolicy":"Debes aceptar las políticas de privacidad para continuar",
+    "formError":"Por favor, rellene el formulario correctamente.",
+    "haveAccount":"¿Ya tienes una cuenta?",
+    "address":"Dirección",
+    "phone":"Teléfono"
+
 
 
 
