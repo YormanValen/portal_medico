@@ -10,6 +10,7 @@ import UserReview from '@/components/landingpage/section/userReview.vue';
 import Features from '@/components/landingpage/section/otherFeatures.vue';
 import AskQuestion from '@/components/landingpage/section/askQuestion.vue';
 import BuyNow from '@/components/landingpage/section/buyNow.vue';
+import TemasInteres from '@/components/landingpage/section/temasInteres.vue';
 import Footer from '@/components/landingpage/layout/Footer.vue';
 
 import 'aos/dist/aos.css';
@@ -27,6 +28,7 @@ onMounted(() => {
         <Header />
 
         <AnuncioDestacado />
+        <TemasInteres/>
         <!----------->
         <!--Content
         <MainBanner />
