@@ -1,6 +1,6 @@
 <template>
 
-    <div class="temas_interes_ctn pa-5 d-flex ga-5 align-center flex-column">
+    <div class="temas_interes_ctn  d-flex ga-5 align-center flex-column">
         <div class="title">
             <h2>{{ $t('temasInteres') }}</h2>
         </div>
@@ -24,7 +24,7 @@
                         <span>Tag3</span>
                     </div>
                     <div class="ver_mas_btn">
-                        <button>Ver más</button>
+                        <button>{{ $t('seeMore') }}</button>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                         <span>Tag3</span>
                     </div>
                     <div class="ver_mas_btn">
-                        <button>Ver más</button>
+                        <button>{{ $t('seeMore') }}</button>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                         <span>Tag3</span>
                     </div>
                     <div class="ver_mas_btn">
-                        <button>Ver más</button>
+                        <button>{{ $t('seeMore') }}</button>
                     </div>
                 </div>
             </div>
@@ -80,13 +80,22 @@
 <script setup></script>
 
 <style scoped>
+.temas_interes_ctn{
+    padding: 2vw 4vw
+}
+
 .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 1vw;
     display: flex;
     flex-direction: column;
     gap: 1vw;
+    transition: all .3s;
     border-radius: 1vw;
+}
+
+.card:hover {
+    transform: scale(1.02);
 }
 
 .card .img_ctn {

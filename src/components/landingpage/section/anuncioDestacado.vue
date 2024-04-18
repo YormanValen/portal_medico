@@ -1,5 +1,5 @@
 <template>
-    <v-carousel hide-delimiters>
+    <v-carousel show-arrows="hover" cycle hide-delimiter-background>
       <v-carousel-item
         v-for="(item,i) in items"
         :key="i"
@@ -18,13 +18,12 @@ const items = ref([
     { src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg' },
 ]);
 
-function exploreMore() {
-    console.log('Implementa la lógica para explorar más contenido o cambiar de vista.');
-}
+
 
 
 
 </script>
-<style>
+<style scoped>
 /* Puedes agregar estilos adicionales aquí si es necesario */
+
 </style>

@@ -50,7 +50,7 @@ const customizer = useCustomizerStore();
 
                             <LanguageDD />
 
-                            <div v-if="user"lass="profile_c">
+                            <div v-if="user" class="profile_ctn">
                                 <ProfileDD />
                             </div>
                         </div>

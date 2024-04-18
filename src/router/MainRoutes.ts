@@ -123,6 +123,11 @@ const MainRoutes = {
             name:'PrivacyPolicy',
             path:'/privacy-policy',
             component:()=>import('@/views/privacy-policy/PrivacyPolicy.vue')
+        },
+        {
+            name:'CalculatorPage',
+            path:'/calculatorPage',
+            component:()=>import('@/views/pages/calculatorPage/CalculatorsPage.vue')
         }
 
         /* {

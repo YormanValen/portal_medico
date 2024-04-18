@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import QuickLinks from '@/components/landingpage/layout/PageMenuQuicklinks.vue';
-import AppsLink from '@/components/landingpage/layout/PageMegamenu.vue';
+
 import { demosMegamenu, appsMegamenu } from '@/_mockApis/landingpage/lpPage';
 import { HelpIcon, ChevronDownIcon } from 'vue-tabler-icons';
 import { useAuthStore } from '@/stores/auth';
@@ -92,7 +91,7 @@ const user = computed(() => authStore.user);
         }}</v-btn>
     <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="" >{{ $t('About Us')
         }}</v-btn>
-    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/advertising">{{ $t('Calculators')
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/calculatorPage">{{ $t('Calculators')
         }}</v-btn>
     <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="" >{{ $t('Research')
         }}</v-btn>
