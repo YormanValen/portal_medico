@@ -214,5 +214,10 @@
     "autores": "Authors",
     "palabrasClave": "Keywords:",
     "debesIniciarSesion": "You must log in to access this content",
-    "resumen": "Summary"
+    "resumen": "Summary",
+    "all": "All",
+    "groups": " Groups ",
+    "recent": "Recent",
+    "favorites": "Favorites ",
+    "noCalculatorsFound": "No calculators found"
 }

@@ -13,6 +13,10 @@ export const useAuthStore = defineStore({
         user: JSON.parse(localStorage.getItem('user') || 'null'),
         returnUrl: null
     }),
+    getters: {
+        isLoggedIn: (state) => !!state.user,
+        isAdmin: (state) => state.user && state.user.role === 'Admin'
+    },
     actions: {
         async login(username: any, password: any) {
             try {

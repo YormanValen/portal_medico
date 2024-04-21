@@ -216,5 +216,10 @@
     "autores": "Autores",
     "palabrasClave": "Palabras Clave:",
     "debesIniciarSesion": "Debes iniciar sesión para ver los resultados",
-    "resumen": "Resumen"
+    "resumen": "Resumen",
+    "all": "Todo",
+    "groups": "Grupos",
+    "recent": "Recientes",
+    "favorites": "Favoritos",
+    "noCalculatorsFound": "No se encontraron calculadoras"
 }
