@@ -4,7 +4,6 @@ import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
 
 const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 
-
 export const useAuthStore = defineStore({
     id: 'auth',
     state: () => ({
@@ -34,8 +33,6 @@ export const useAuthStore = defineStore({
                 }
 
                 this.user = response; // Establecer el usuario en el estado de Pinia.
-                console.log('user', userDetails);
-                console.log('data', data);
 
                 localStorage.setItem('user', JSON.stringify(userDetails)); // Guardar el usuario en localStorage.
                 router.push(this.returnUrl || '/');
@@ -54,18 +51,24 @@ export const useAuthStore = defineStore({
             especiality: string,
             yearsOfExperience: number,
             orcid: string,
-            charge: string
+            profession: string,
+            otherHealthArea: string,
+            otherNonHealthArea: string,
+            otherSpeciality: string
         ) {
             const newUser = await fetchWrapper.post(`${baseUrl}/register2`, {
-                username,
-                password,
-                name,
-                country,
                 city,
+                country,
                 especiality,
-                yearsOfExperience,
+                name,
                 orcid,
-                charge
+                otherHealthArea,
+                otherNonHealthArea,
+                otherSpeciality,
+                password,
+                profession,
+                username,
+                yearsOfExperience
             });
             localStorage.setItem('newUser', JSON.stringify(newUser));
             router.push(this.returnUrl || '/auth/login2');
@@ -76,11 +79,21 @@ export const useAuthStore = defineStore({
             localStorage.removeItem('datosUsuario');
             router.push('/auth/login2');
         },
+        // Método para agregar un atributo al usuario
+        addAttribute(newIntroduction: any) {
+            // Verificar si el usuario está logueado antes de intentar modificar su perfil
+            if (!this.user) return;
+
+            // Actualizar el campo de introducción en el estado del usuario
+            this.user.introduction = newIntroduction;
+
+            // Guardar el usuario actualizado en localStorage
+            localStorage.setItem('user', JSON.stringify(this.user));
+        },
         //funcion para obtenet los datos del usuario
         getUserDetails(username: string) {
             const users: Array<{ username: string }> = JSON.parse(localStorage.getItem('users') || '[]');
             return users.find((user: { username: string }) => user.username === username);
-        },
-        
+        }
     }
 });

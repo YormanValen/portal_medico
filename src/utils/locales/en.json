@@ -219,5 +219,13 @@
     "groups": " Groups ",
     "recent": "Recent",
     "favorites": "Favorites ",
-    "noCalculatorsFound": "No calculators found"
+    "noCalculatorsFound": "No calculators found",
+    "contributory": "Contributory",
+    "subsidized": "Subsidized",
+    "special": "Special",
+    "prepaid": "Prepaid",
+    "particular": "Particular",
+    "seguroInternacional": "International Insurance",
+    "SOAT": "SOAT",
+    "none": "None"
 }

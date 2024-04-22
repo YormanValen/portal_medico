@@ -1,6 +1,6 @@
 <!-- RiskProgressBar.vue -->
 <template>
-    <div class="risk-progress-container d-grid gap-2 ":class="label">
+    <div class="risk-progress-container d-grid gap-2 " :class="label">
         <div class="progress-label font-weight-bold d-flex justify-end gap-2">{{ label }}</div>
         <div class="risk-progress-bar">
             <div :style="{ width: progressPercentage + '%' }" class="progress-bar"

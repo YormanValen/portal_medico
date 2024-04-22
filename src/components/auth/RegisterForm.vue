@@ -34,28 +34,86 @@ const otherSpeciality = ref('');
 const profession = ref('');
 const otherHealthArea = ref('');
 const otherNonHealthArea = ref('');
-const specialitiesOptions = ref<any[]>([]);
+
+
+
+
+// Inicializa el array con el tipo específico
+const specialitiesOptions = ref<string[]>([]);
+
 
 const professions = computed(() => [
-  t('estudiante'),
-  t('doctor'),
-  t('nurse'),
-  t('pharmacist'),
-  t('psychologist'),
-  t('resident'),
-  t('researcher'),
-  t('specialist'),
-  t('managementAndAdministration'),
-  t('oralHealthProfessional'),
-  t('otherHealthRelatedAreas'),
-  t('otherNonHealthRelatedAreas')
+    t('estudiante'),
+    t('doctor'),
+    t('nurse'),
+    t('pharmacist'),
+    t('psychologist'),
+    t('resident'),
+    t('researcher'),
+    t('specialist'),
+    t('managementAndAdministration'),
+    t('oralHealthProfessional'),
+    t('otherHealthRelatedAreas'),
+    t('otherNonHealthRelatedAreas')
 ]);
 
 // Observa los cambios en profession y actualiza specialitiesOptions si es necesario
 watch(profession, (newProfession) => {
     if (newProfession === t('resident') || newProfession === t('specialist')) {
         // Aquí podrías cargar las especialidades desde una API o definir una lista estática
-        specialitiesOptions.value = []; // reemplaza los puntos suspensivos con tus especialidades
+        specialitiesOptions.value = [
+            'Alergología',
+            'Anestesiología',
+            'Cardiología',
+            'Cardiología intervencionista',
+            'Cardiología pediátrica',
+            'Cirugía cardiovascular',
+            'Cirugía de mano',
+            'Cirugía de trasplantes',
+            'Cirugía de trasplantes de órganos',
+            'Cirugía plástica',
+            'Cirugía vascular periférica',
+            'Coloproctologia',
+            'Dermatología',
+            'Electrofisiología cardíaca',
+            'Endocrinología',
+            'Gastroenterología',
+            'Ginecología y obstetricia',
+            'Hemato-oncología',
+            'Infectología',
+            'Infectología pediátrica',
+            'Medicina',
+            'Medicina Homeopática',
+            'Medicina Osteopática',
+            'Medicina aplicada a la actividad física y al deporte',
+            'Medicina crítica y cuidado',
+            'Medicina crítica y cuidado intensivo',
+            'Medicina de urgencias',
+            'Medicina del deporte y de la actividad física',
+            'Medicina del dolor y cuidados paliativos',
+            'Medicina familiar',
+            'Medicina maternofetal',
+            'Medicina tradicional china',
+            'Neonatología',
+            'Neumología',
+            'Neurología',
+            'Neurología pediátrica',
+            'Obstetricia y ginecología',
+            'Oftalmología',
+            'Ortopedia infantil',
+            'Ortopedia y traumatología',
+            'Otología',
+            'Otorrinolaringología',
+            'Patología',
+            'Psiquiatría',
+            'Psiquiatría de enlace',
+            'Psiquiatría de niños y adolescentes',
+            'Radiología',
+            'Radiología e imágenes',
+            'Radioterapia'
+        ];
+        console.log('Especialidades:', specialitiesOptions.value);
+        // reemplaza los puntos suspensivos con tus especialidades
     } else {
         specialitiesOptions.value = [];
     }
@@ -116,10 +174,9 @@ const submitRegistration = () => {
         city: city.value,
         yearsOfExperience: yearsOfExperience.value,
         orcid: orcid.value,
-        charge: charge.value,
         profession: profession.value,
-        otherHealthArea: profession.value,
-        otherNonHealthArea: profession.value,
+        otherHealthArea: otherHealthArea.value,
+        otherNonHealthArea: otherNonHealthArea.value,
         especiality: (profession.value === t('resident') || profession.value === t('specialist')) ? especiality.value : '',
         otherSpeciality: otherSpeciality.value, // Asegúrate de que esta línea corresponda a tu lógica de negocio
 
@@ -168,7 +225,7 @@ const submitRegistration = () => {
             <span class="bg-surface px-5 py-3 position-relative">{{ $t('orSignIn') }}</span>
         </div>
     </div>
-    <v-form ref="form" v-model="valid" lazy-validation @submit="" action="/pages/boxedlogin" class="mt-5">
+    <v-form ref="form" v-model="valid" lazy-validation @submit.prevent action="/pages/boxedlogin" class="mt-5">
         <v-row>
             <v-col>
                 <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('name') }}</v-label>
@@ -188,8 +245,8 @@ const submitRegistration = () => {
                 <!-- Muestra el select de especialidades si la profesión seleccionada es 'Residente' o 'Especialista' -->
                 <v-label v-if="profession === t('resident') || profession === t('specialist')"
                     class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especificarEspecialidad') }}</v-label>
-                <v-select v-if="profession === t('resident') || profession === t('resident')" v-model="especiality"
-                    :items="specialitiesOptions" required></v-select>
+                <v-select v-if="profession === t('resident') || profession === t('specialist')" v-model="especiality"
+                    :items=specialitiesOptions  required></v-select>
 
                 <!-- Muestra un campo de texto si la profesión seleccionada es 'Otras áreas relacionadas con la salud' -->
                 <v-label v-if="profession === 'Otras áreas relacionadas con la salud'"
@@ -208,8 +265,7 @@ const submitRegistration = () => {
                 <VTextField v-model="yearsOfExperience" :rules="yearsOfExperienceRules" required></VTextField>
                 <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('orcid') }}</v-label>
                 <VTextField v-model="orcid" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('charge') }}</v-label>
-                <VTextField v-model="charge" required></VTextField>
+
             </v-col>
         </v-row>
         <v-row>
@@ -225,8 +281,8 @@ const submitRegistration = () => {
         </v-row>
 
         <v-btn size="large" @click.prevent="submitRegistration" class="mt-2" color="primary" block submit flat>{{
-                    $t('Sign Up')
-                }}
+            $t('Sign Up')
+            }}
         </v-btn>
 
         <div v-if="apiError" class="mt-2 alert-box">

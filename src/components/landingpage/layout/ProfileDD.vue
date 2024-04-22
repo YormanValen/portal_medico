@@ -31,7 +31,7 @@ const user = computed(() => authStore.user);
                     </v-avatar>
                     <div class="ml-3">
                         <h6 class="text-h6 mb-n1">{{ user.name }}</h6>
-                        <span class="text-subtitle-1 font-weight-regular textSecondary">{{ user.charge }}</span>
+                        <span class="text-subtitle-1 font-weight-regular textSecondary">{{ user.profession }}</span>
                         <div class="d-flex align-center mt-1">
                             <MailIcon size="18" stroke-width="1.5" />
                             <span class="text-subtitle-1 font-weight-regular textSecondary ml-2">{{ user.username

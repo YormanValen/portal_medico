@@ -30,7 +30,7 @@ const erc = ref(false); // Enfermedad Renal Crónica
 const momentoIntervencion = ref(''); // Puede ser un select con opciones predefinidas
 const inestabilidadHemodinamica = ref(false);
 const categoriaCirugia = ref(''); // Puede ser un select con opciones predefinidas
-const cupsProcedimiento = ref(''); // Puede requerir validación específica o un componente de búsqueda
+const cupsProcedimiento = ref('');
 const tipoAbordajeQuirurgico = ref(''); // Puede ser un select con opciones predefinidas
 
 
@@ -126,20 +126,106 @@ const validarCampos = () => {
     }
 };
 
+const tiposAsaScore = computed(() => [
+    'I ','II','III','IV','V','VI','E'
+]);
+
+const tiposComplejidadProcedimiento = computed(() => [
+    'Bajo',
+    'Medio',
+    'Alto'
+]);
+
+const tiposAfiliacionSalud = computed(() => [
+    t('contributory'),
+    t('subsidized'),
+    t('special'),
+    t('prepaid'),
+    t('particular'),
+    t('seguroInternacional'),
+    t('SOAT'),
+    t('none')
+]);
+
+
+
 const interventionItems = computed(() => [
     t('preoperative'),
     t('intraoperative'),
     t('postoperative')
 ]);
 
-const categoryItems = computed(() => [
-    t('minor'),
-    t('major')
+const categoryItems = ref([
+    'Ortopédico',
+    'Ginecológico Obstétrico',
+    'Seno',
+    'Gastrointestinal',
+    'Coloproctología',
+    'Hepatobiliar',
+    'Urología y Renal',
+    'Vascular',
+    'Cirugía Cardíaca',
+    'Cirugía Torácica',
+    'Cabeza y Cuello',
+    'Plástica',
+    'Trasplante',
+    'Neurocirugía',
+    'Otorrinolaringologia',
+    'Oftalmología',
+    'Pared Abdominal',
+    'Tejido blando',
+    'Otra'
 ]);
 
+const cupsOptions = ref([
+    '01 PROCEDIMIENTOS EN CRANEO, CEREBRO Y MENINGES CEREBRALES',
+    '010 INCISION DE CRANEO (PUNCIONES EN CRANEO)',
+    '0101 PUNCIONES EN CISTERNA',
+    '010101 PUNCION CISTERNAL, VIA LATERAL',
+    '010102 PUNCION CISTERNAL, VIA MEDIAL',
+    '010103 PUNCION CISTERNAL',
+    '0102 PUNCIONES (ASPIRACION DE LIQUIDO) EN VENTRICULOS',
+    '010201 PUNCION (ASPIRACION DE LIQUIDO) VENTRICULAR A TRAVES DE CATETER PREVIAMENTE IMPLANTADO',
+    '010202 PUNCION (ASPIRACION DE LIQUIDO) VENTRICULAR POR TREPANACION (SIN CATETER)',
+    '010203 PUNCION (ASPIRACION DE LIQUIDO) VENTRICULAR A TRAVES DE UN RESERVORIO',
+    '010204 PUNCION (ASPIRACION DE LIQUIDO) VENTRICULAR, VIA TRANSFONTANELAR',
+    '010205 PUNCION (ASPIRACION DE LIQUIDO) VENTRICULAR',
+    '0109 PUNCION CRANEAL',
+    '010901 PUNCION SUBDURAL',
+    '010902 OTRA PUNCION CRANEAL',
+    '011 PROCEDIMIENTOS DIAGNOSTICOS EN CRANEO, CEREBRO Y MENINGES CEREBRALES',
+    '0111 BIOPSIA EN CRANEO',
+    '011101 BIOPSIA OSEA EN CRANEO POR CRANEOTOMIA',
+    '011102 BIOPSIA OSEA EN CRANEO POR CRANIECTOMIA',
+    '011103 BIOPSIA DE CRANEO', '011103 BIOPSIA DE CRANEO',
+    '0112 BIOPSIAS DE MENINGE CEREBRAL',
+    '011201 BIOPSIA DE MENINGE, POR CRANEOTOMIA',
+    '011202 BIOPSIA DE MENINGE CEREBRAL',
+    '0113 BIOPSIAS DE CEREBRO',
+    '011301 BIOPSIA CERRADA (PERCUTANEA) (AGUJA) DE CEREBRO',
+    '011302 BIOPSIA ABIERTA (CRANEOTOMIA) DE CEREBRO',
+    '011303 BIOPSIA DE CEREBRO POR TREPANACION',
+    '011306 BIOPSIA DE CEREBRO SUPERFICIAL POR ESTEREOTAXIA',
+    '011307 BIOPSIA DE CEREBRO PROFUNDA POR ESTEREOTAXIA',
+    '012 CRANEOTOMIA Y CRANIECTOMIA',
+    '0121 INCISION O DRENAJE O DESFUNCIONALIZACION DE SENO FRONTAL',
+    '012101 CRANEALIZACION DE SENO FRONTAL',
+    '012102 INCISION Y DRENAJE DE SENO FRONTAL',
+    '012103 DESFUNCIONALIZACION DE SENO FRONTAL',
+    '0122 RETIRO, SUSTITUCION O REVISION DE NEUROESTIMULADOR O ELECTRODO INTRACRANEAL',
+    'Otra'
+]);
+
+
 const typeOfSurgeryItems = computed(() => [
-    t('open'),
-    t('minimallyInvasive')
+    'Abierto',
+    'Video-asistido',
+    'Endovascular',
+    'Abierta/Video-asistida',
+    'Abierta/Endovascular',
+    'Asistida por robot',
+    'Pericutáneo',
+    'Intravaginal'
 ]);
 
 const genderTypes = computed(() => [
@@ -293,20 +379,22 @@ onMounted(cargarDatosUsuario);
 
 
                 <v-label class="mb-2 font-weight-medium">{{ $t('CUPSProcedure') }}</v-label>
-                <v-text-field v-model="cupsProcedimiento" :rules="[textFRequired]" label=""></v-text-field>
+                <v-select v-model="cupsProcedimiento" :items="cupsOptions" :rules="[selectRule]" required></v-select>
+
+
 
                 <v-label class="mb-2 font-weight-medium">{{ $t('surgicalApproach') }}</v-label>
                 <v-select v-model="tipoAbordajeQuirurgico" :rules="[selectRule]" :items="typeOfSurgeryItems"></v-select>
 
                 <v-label class="mb-2 font-weight-medium">{{ $t('healthSystemAffiliation') }}</v-label>
-                <v-text-field v-model="afiliacionSalud" :rules="[textFRequired]" riant="outlined"></v-text-field>
+                <v-select v-model="afiliacionSalud" :rules="[selectRule]" :items="tiposAfiliacionSalud"></v-select>
 
                 <v-label class="mb-2 font-weight-medium">{{ $t('ASAScore') }}</v-label>
-                <v-text-field v-model="asaScore" :rules="[textFRequired]" variant="outlined"></v-text-field>
+                <v-select v-model="asaScore" :rules="[selectRule]" :items="tiposAsaScore"></v-select>
 
                 <v-label class="mb-2 font-weight-medium">{{ $t('procedureComplexity') }}</v-label>
-                <v-text-field v-model="complejidadProcedimiento" :rules="[textFRequired]"
-                    variant="outlined"></v-text-field>
+                <v-select v-model="complejidadProcedimiento" :rules="[selectRule]" :items="tiposComplejidadProcedimiento"></v-select>
+
 
             </v-col>
         </v-row>

@@ -9,16 +9,16 @@
                     </v-card-title>
                     <v-card-text>
                         <v-checkbox v-model="reportOptions.mortalidad" :label="$t('mortality')"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.complicacionesMayores"
+                        <v-checkbox v-model="reportOptions.complicaciones_mayores"
                         :label="$t('majorComplications')"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.reintervencionQuirurgica"
+                        <v-checkbox v-model="reportOptions.reintervencion_quirurgica"
                         :label="$t('surgicalReintervention')"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.infeccionSitioOperatorio"
+                        <v-checkbox v-model="reportOptions.infeccion_sitio_operatorio"
                         :label="$t('surgicalSiteInfection')"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.infeccionViaUrinaria"
+                        <v-checkbox v-model="reportOptions.infeccion_via_urinaria"
                         :label="$t('urinaryTractInfection')"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.neumonia" :label="$t('pneumonia')"></v-checkbox>
-                        <v-checkbox v-model="reportOptions.lesionRenalAguda" :label="$t('acuteRenalInjury')"></v-checkbox>
+                        <v-checkbox v-model="reportOptions.neumotonia" :label="$t('pneumonia')"></v-checkbox>
+                        <v-checkbox v-model="reportOptions.lesion_renal_aguda" :label="$t('acuteRenalInjury')"></v-checkbox>
 
                     </v-card-text>
                     <v-card-text>
@@ -52,12 +52,12 @@ const router = useRouter();
 
 const reportOptions = reactive({
     mortalidad: false,
-    complicacionesMayores: false,
-    reintervencionQuirurgica: false,
-    infeccionSitioOperatorio: false,
-    infeccionViaUrinaria: false,
-    neumonia: false,
-    lesionRenalAguda: false,
+    complicaciones_mayores: false,
+    reintervencion_quirurgica: false,
+    infeccion_sitio_operatorio: false,
+    infeccion_via_urinaria: false,
+    neumotonia: false,
+    lesion_renal_aguda: false,
 
 });
 
@@ -67,10 +67,11 @@ const regresar = () => {
 
 const generarInforme = async () => {
     // Aquí actualizas el store con las opciones seleccionadas
+
     reportStore.updateOptions(reportOptions);
 
     // Supongamos que getRiskPercentages ya considera las opciones actualizadas
-    const riskPercentages = await reportStore.getRiskPercentages();
+    const riskPercentages = await reportStore.getRiskPercentageForSelectedOptions();
 
     // Puedes almacenar estos datos en el store o pasarlos como parámetros de ruta si son manejables
     reportStore.setRiskPercentages(riskPercentages);

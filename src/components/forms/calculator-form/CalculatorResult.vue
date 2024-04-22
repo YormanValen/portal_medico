@@ -7,7 +7,7 @@
                     <v-card-title>{{ $t('procedureDetails') }}</v-card-title>
                     <v-card-text>
                         <div><strong>{{ $t('procedure') }}</strong> {{ datosUsuario.cupsProcedimiento }} - {{
-        datosUsuario.categoriaCirugia }}</div>
+                            datosUsuario.categoriaCirugia }}</div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -18,13 +18,18 @@
                     <v-card-title>{{ $t('evaluationResults') }}</v-card-title>
                     <v-card-text>
                         <RiskProgressBar name="mortalidad" :label="$t('mortality')" riskLimitPercentage="2" />
-                        <RiskProgressBar name="complicaciones_mayores" :label="$t('majorComplications')" riskLimitPercentage="5" />
+                        <RiskProgressBar name="complicaciones_mayores" :label="$t('majorComplications')"
+                            riskLimitPercentage="5" />
                         <!-- Repetir para cada resultado calculado, ajustando los valores según necesidad -->
-                        <RiskProgressBar name="reintervencion_quirurgica" :label="$t('surgicalReintervention')" riskLimitPercentage="3" />
-                        <RiskProgressBar name="infeccion_sitio_operatorio" :label="$t('surgicalSiteInfection')" riskLimitPercentage="4" />
-                        <RiskProgressBar name="infeccion_via_urinaria" :label="$t('urinaryTractInfection')" riskLimitPercentage="3" />
+                        <RiskProgressBar name="reintervencion_quirurgica" :label="$t('surgicalReintervention')"
+                            riskLimitPercentage="3" />
+                        <RiskProgressBar name="infeccion_sitio_operatorio" :label="$t('surgicalSiteInfection')"
+                            riskLimitPercentage="4" />
+                        <RiskProgressBar name="infeccion_via_urinaria" :label="$t('urinaryTractInfection')"
+                            riskLimitPercentage="3" />
                         <RiskProgressBar name="neumotonia" :label="$t('pneumonia')" riskLimitPercentage="2" />
-                        <RiskProgressBar name="lesion_renal_aguda" :label="$t('acuteRenalInjury')" riskLimitPercentage="2" />
+                        <RiskProgressBar name="lesion_renal_aguda" :label="$t('acuteRenalInjury')"
+                            riskLimitPercentage="2" />
 
                     </v-card-text>
                     <v-card-actions>
@@ -45,7 +50,7 @@
                     <v-card-title>{{ $t('procedureDetails') }}</v-card-title>
                     <v-card-text>
                         <div><strong>{{ $t('procedure') }}</strong> {{ datosUsuario.cupsProcedimiento }} - {{
-        datosUsuario.categoriaCirugia }}</div>
+                            datosUsuario.categoriaCirugia }}</div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -55,8 +60,8 @@
                 <v-card>
                     <v-card-title>{{ $t('evaluationResults') }}</v-card-title>
                     <v-card-text>
-                        <RiskProgressBar :label="$t('mortality')" :progressPercentage="resultados.mortalidad"
-                            riskLimitPercentage="2" />
+                        <RiskProgressBar name="mortalidad" :label="$t('mortality')" riskLimitPercentage="2" />
+
 
                     </v-card-text>
                     <v-card-actions>
@@ -95,16 +100,7 @@ const usuarioAutenticado = computed(() => {
 });
 
 const router = useRouter();
-const resultados = ref({
-    mortalidad: 10, // Valores de ejemplo
-    complicacionesMayores: 20,
-    ReintervencionQuirurgica: 5,
-    InfeccionSitioOperatorio: 15,
-    InfecciónViaUrinaria: 10,
-    Neumonia: 5,
-    LesionRenalAguda: 5,
-    EstanciaHospitalaria: 10,
-});
+
 
 
 
