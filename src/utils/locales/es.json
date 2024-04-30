@@ -162,7 +162,7 @@
     "send": "Enviar",
     "prevReport": "Previsualizar Reporte",
     "backResults": "Volver a los resultados",
-    "sendToPatient": "Enviar al paciente",
+    "sendToEmail": "Enviar al correo",
     "userProfile": "Perfil de Usuario",
     "logout": "Cerrar Sesión",
     "actionRequired": " Acción Requerida",
@@ -229,5 +229,9 @@
     "particular": "Particular",
     "seguroInternacional": "Seguro Internacional",
     "SOAT": "SOAT",
-    "none": "Ninguno"
+    "none": "Ninguno",
+    "afiliacion": "Afiliación",
+    "dislipidemia": "Dislipidemia",
+    "Si": "Si",
+    "No": "No"
 }

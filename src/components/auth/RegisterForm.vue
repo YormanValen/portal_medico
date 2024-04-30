@@ -11,23 +11,20 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 /*Components*/
-const checkbox = ref(false);
 const valid = ref(true);
 const show1 = ref(false);
 const password = ref('');
 const email = ref('');
 const country = ref('');
 const city = ref('');
-const especiality = ref('');
+const especiality = ref([]);
 const yearsOfExperience = ref('');
 const orcid = ref('');
 const charge = ref('');
 const fname = ref('');
 const apiError = ref('');
 const agreeToPrivacyPolicy = ref(false); // Para manejar el estado del checkbox
-
-
-
+const afiliacion = ref('');
 const router = useRouter();
 
 const otherSpeciality = ref('');
@@ -119,6 +116,10 @@ watch(profession, (newProfession) => {
     }
 });
 
+const fiedRequired = ref([
+    (v: string) => !!v || t('fiedRequired'),
+]);
+
 const passwordRules = ref([
     (v: string) => !!v || t('passwordRequired'),
     (v: string) => (v && v.length <= 10) || t('passwordLength'),
@@ -148,15 +149,6 @@ const yearsOfExperienceRules = ref([
     (v: string) => !isNaN(Number(v)) || t('fieldMustBeNumber'),
 ]);
 
-const orcidRules = ref([
-    (v: string) => !!v || t('fiedRequired'),
-]);
-
-const chargeRules = ref([
-    (v: string) => !!v || t('fiedRequired'),
-    (v: string) => isNaN(Number(v)) || t('fieldCannotBeANumber'),
-
-]);
 
 
 const submitRegistration = () => {
@@ -174,6 +166,7 @@ const submitRegistration = () => {
         city: city.value,
         yearsOfExperience: yearsOfExperience.value,
         orcid: orcid.value,
+        afiliacion: afiliacion.value,
         profession: profession.value,
         otherHealthArea: otherHealthArea.value,
         otherNonHealthArea: otherNonHealthArea.value,
@@ -246,8 +239,7 @@ const submitRegistration = () => {
                 <v-label v-if="profession === t('resident') || profession === t('specialist')"
                     class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especificarEspecialidad') }}</v-label>
                 <v-select v-if="profession === t('resident') || profession === t('specialist')" v-model="especiality"
-                    :items=specialitiesOptions  required></v-select>
-
+                    :items="specialitiesOptions" multiple persistent-hint></v-select>
                 <!-- Muestra un campo de texto si la profesión seleccionada es 'Otras áreas relacionadas con la salud' -->
                 <v-label v-if="profession === 'Otras áreas relacionadas con la salud'"
                     class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especificarArea') }}</v-label>
@@ -264,7 +256,9 @@ const submitRegistration = () => {
                 <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('yearsExperience') }}</v-label>
                 <VTextField v-model="yearsOfExperience" :rules="yearsOfExperienceRules" required></VTextField>
                 <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('orcid') }}</v-label>
-                <VTextField v-model="orcid" required></VTextField>
+                <VTextField v-model="orcid" :rules="fiedRequired" required></VTextField>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('afiliacion') }}</v-label>
+                <VTextField v-model="afiliacion" :rules="fiedRequired" required></VTextField>
 
             </v-col>
         </v-row>

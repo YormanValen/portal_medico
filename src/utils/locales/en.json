@@ -160,7 +160,7 @@
     "send": "send",
     "prevReport": "Preview Report",
     "backResults": "Back to Results",
-    "sendToPatient": "Send to Patient",
+    "sendToEmail": "Send to email",
     "userProfile": "User Profile",
     "logout": "Logout",
     "actionRequired": " Action Required",
@@ -227,5 +227,9 @@
     "particular": "Particular",
     "seguroInternacional": "International Insurance",
     "SOAT": "SOAT",
-    "none": "None"
+    "none": "None",
+    "afiliacion": "Affiliation",
+    "dislipidemia": "Dyslipidemia",
+    "Si": "Yes",
+    "No": "No"
 }

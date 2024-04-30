@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted, } from 'vue';
 import { useRouter } from 'vue-router';
-import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useCalculatorsStore } from '../../../stores/calculatorStore';
+
+const calculatorStore = useCalculatorsStore();
 
 
 const { t } = useI18n();
@@ -20,6 +22,7 @@ const tabaco = ref(false);
 const hipertension = ref(false);
 const arritmia = ref(false);
 const fallaCardiaca = ref(false);
+const dislipidemia = ref(false);
 const diabetes = ref(false);
 const epoc = ref(false);
 
@@ -33,38 +36,63 @@ const categoriaCirugia = ref(''); // Puede ser un select con opciones predefinid
 const cupsProcedimiento = ref('');
 const tipoAbordajeQuirurgico = ref(''); // Puede ser un select con opciones predefinidas
 
+let tabacoState = 0;
+let hipertensionState = 0;
+let arritmiaState = 0;
+let fallaCardiacaState = 0;
+let dislipidemiaState = 0;
+let diabetesState = 0;
+let epocState = 0;
+let ercState = 0;
+let inestabilidadHemodinamicaState = 0;
+let momentoIntervencionState = 0;
+
 
 // Funciones para manejar los cambios en las casillas de verificación
-const handleTabacoChange = (newValue: boolean) => {
-    tabaco.value = newValue;
+const handleTabacoChange = (value: any) => {
+    console.log('Tabaco entre');
+    tabacoState = value ? 1 : 0;
+    console.log('Tabaco:', tabacoState);
 };
 
-const handleHipertensionChange = (newValue: boolean) => {
-    hipertension.value = newValue;
+const handleHipertensionChange = (value: any) => {
+    hipertensionState = value ? 1 : 0;
+    console.log('Hipertensión:', hipertensionState);
 };
 
-const handleArritmiaChange = (newValue: boolean) => {
-    arritmia.value = newValue;
+const handleArritmiaChange = (value: any) => {
+    arritmiaState = value ? 1 : 0;
+    console.log('Arritmia:', arritmiaState);
 };
 
-const handleFallaCardiacaChange = (newValue: boolean) => {
-    fallaCardiaca.value = newValue;
+const handleFallaCardiacaChange = (value: any) => {
+    fallaCardiacaState = value ? 1 : 0;
+    console.log('Falla Cardiaca:', fallaCardiacaState);
 };
 
-const handleDiabetesChange = (newValue: boolean) => {
-    diabetes.value = newValue;
+const handleDislipidemiaChange = (value: any) => {
+    dislipidemiaState = value ? 1 : 0;
+    console.log('Dislipidemia:', dislipidemiaState);
 };
 
-const handleEpocChange = (newValue: boolean) => {
-    epoc.value = newValue;
+const handleDiabetesChange = (value: any) => {
+    diabetesState = value ? 1 : 0;
+    console.log('Diabetes:', diabetesState);
 };
 
-const handleErcChange = (newValue: boolean) => {
-    erc.value = newValue;
+const handleEpocChange = (value: any) => {
+    epocState = value ? 1 : 0;
+    console.log('EPOC:', epocState);
 };
 
-const handleInestabilidadHemodinamicaChange = (newValue: boolean) => {
-    inestabilidadHemodinamica.value = newValue;
+const handleErcChange = (value: any) => {
+    ercState = value ? 1 : 0;
+    console.log('ERC:', ercState);
+};
+
+const handleInestabilidadHemodinamicaChange = (value: any) => {
+    inestabilidadHemodinamicaState = value ? 1 : 0;
+    console.log('Inestabilidad Hemodinámica:', inestabilidadHemodinamicaState);
 };
 
 
@@ -118,6 +146,15 @@ watch([peso, talla], () => {
     }
 });
 
+watch(momentoIntervencion, (newValue) => {
+    // Esto directamente causa un cambio de estado que podría estar relacionado con el error.
+    momentoIntervencionState = newValue === 'Si' ? 1 : 0;
+});
+
+
+
+
+
 const validarCampos = () => {
     if (edad.value && genero.value && peso.value && talla.value && afiliacionSalud.value && asaScore.value && complejidadProcedimiento.value) {
         return true;
@@ -127,7 +164,7 @@ const validarCampos = () => {
 };
 
 const tiposAsaScore = computed(() => [
-    'I ','II','III','IV','V','VI','E'
+    'I ', 'II', 'III', 'IV', 'V', 'VI', 'E'
 ]);
 
 const tiposComplejidadProcedimiento = computed(() => [
@@ -150,9 +187,8 @@ const tiposAfiliacionSalud = computed(() => [
 
 
 const interventionItems = computed(() => [
-    t('preoperative'),
-    t('intraoperative'),
-    t('postoperative')
+    t('Si'),
+    t('No')
 ]);
 
 const categoryItems = ref([
@@ -307,7 +343,10 @@ const cargarDatosUsuario = () => {
     }
 };
 
-onMounted(cargarDatosUsuario);
+onMounted(async () => {
+    cargarDatosUsuario();
+    await calculatorStore.fetchCalculators(); // Llama a la acción del store
+});
 
 </script>
 
@@ -321,8 +360,21 @@ onMounted(cargarDatosUsuario);
         <v-row>
 
             <v-col>
-                <v-label class="mb-2 font-weight-medium">{{ $t('age') }}</v-label>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('age') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cuál es la edad del paciente en el momento de la intervención?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-text-field v-model="edad" :rules="[ageRule]" variant="outlined" color="success"></v-text-field>
+
+
                 <v-label class="mb-2 font-weight-medium">{{ $t('gender') }}</v-label>
                 <v-select v-model="genero" :rules="[selectRule]" :items="genderTypes" variant="outlined"
                     placeholder="Select Gender" color="primary"></v-select>
@@ -330,24 +382,144 @@ onMounted(cargarDatosUsuario);
                 <v-row>
                     <v-col>
 
-                        <v-checkbox v-model="tabaco" :label="$t('tobacco')"
-                            @change="handleTabacoChange(tabaco)"></v-checkbox>
-                        <v-checkbox v-model="hipertension" :label="$t('highBloodPressure')"
-                            @change="handleHipertensionChange(hipertension)"></v-checkbox>
-                        <v-checkbox v-model="arritmia" :label="$t('cardiacArrhythmia')"
-                            @change="handleArritmiaChange(arritmia)"></v-checkbox>
-                        <v-checkbox v-model="erc" :label="$t('CKD')" @change="handleErcChange(erc)"></v-checkbox>
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="tabaco" :label="$t('tobacco')"
+                                @change="handleTabacoChange"></v-checkbox>
+
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Es consumidor de tabaco?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="hipertension" :label="$t('highBloodPressure')"
+                                @change="handleHipertensionChange(hipertension)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente hipertensión arterial?
+                                </span>
+                            </v-tooltip>
+
+                        </div>
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="arritmia" :label="$t('cardiacArrhythmia')"
+                                @change="handleArritmiaChange(arritmia)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente hipertensión arterial?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="erc" :label="$t('CKD')"
+                                @change="handleErcChange(erc)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente enfermedad renal crónica?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+
 
 
                     </v-col>
                     <v-col>
-                        <v-checkbox v-model="fallaCardiaca" :label="$t('heartFailure')"
-                            @change="handleFallaCardiacaChange(fallaCardiaca)"></v-checkbox>
-                        <v-checkbox v-model="diabetes" :label="$t('diabetes')"
-                            @change="handleDiabetesChange(diabetes)"></v-checkbox>
-                        <v-checkbox v-model="epoc" :label="$t('COPD')" @change="handleEpocChange(epoc)"></v-checkbox>
-                        <v-checkbox v-model="inestabilidadHemodinamica" :label="$t('hemodynamicInstability')"
-                            @change="handleInestabilidadHemodinamicaChange(inestabilidadHemodinamica)"></v-checkbox>
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="fallaCardiaca" :label="$t('heartFailure')"
+                                @change="handleFallaCardiacaChange(fallaCardiaca)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente falla cardiaca?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="dislipidemia" :label="$t('dislipidemia')"
+                                @change="handleDislipidemiaChange(dislipidemia)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente dislipidemia?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="diabetes" :label="$t('diabetes')"
+                                @change="handleDiabetesChange(diabetes)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente Diabetes Mellitus?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="epoc" :label="$t('COPD')"
+                                @change="handleEpocChange(epoc)"></v-checkbox>
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿Tiene el paciente Enfermedad Pulmonar Obstructiva Crónica (EPOC)?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+                        <div class="d-flex align-center">
+                            <v-checkbox class="checkbox" v-model="inestabilidadHemodinamica"
+                                :label="$t('hemodynamicInstability')"
+                                @change="handleInestabilidadHemodinamicaChange(inestabilidadHemodinamica)"></v-checkbox>
+
+                            <v-tooltip location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                        mdi-help-circle-outline
+                                    </v-icon>
+                                </template>
+                                <span>¿El paciente presentó signos y síntomas asociados a inestabilidad hemodinámica
+                                    pre-operatoria?
+                                </span>
+                            </v-tooltip>
+                        </div>
+
+
 
                     </v-col>
                 </v-row>
@@ -367,33 +539,108 @@ onMounted(cargarDatosUsuario);
                 <v-label class="mb-2 font-weight-medium">{{ $t('BMI') }}</v-label>
                 <v-text-field v-model="imc" variant="outlined" color="success" readonly></v-text-field>
 
-
-                <v-label class="mb-2 font-weight-medium">{{ $t('interventionTime') }}</v-label>
+                <div class="d-flex align-center">
+                    <!-- Checkbox para tabaco -->
+                    <v-label class="mb-2 font-weight-medium">{{ $t('interventionTime') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Es un procedimiento electivo el que se va a realizar?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-select v-model="momentoIntervencion" :rules="[selectRule]" :items="interventionItems"
                     placeholder="Select Intervention Time"></v-select>
 
-
-                <v-label class="mb-2 font-weight-medium">{{ $t('surgeryCategory') }} </v-label>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('surgeryCategory') }} </v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cómo clasifica la categoría de la cirugía?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-select v-model="categoriaCirugia" :rules="[selectRule]" :items="categoryItems"
                     color="primary"></v-select>
 
-
-                <v-label class="mb-2 font-weight-medium">{{ $t('CUPSProcedure') }}</v-label>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('CUPSProcedure') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cómo se clasifica la cirugía según CUPS?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-select v-model="cupsProcedimiento" :items="cupsOptions" :rules="[selectRule]" required></v-select>
 
 
-
-                <v-label class="mb-2 font-weight-medium">{{ $t('surgicalApproach') }}</v-label>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('surgicalApproach') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cuál fue el tipo de abordaje quirúrgico al iniciar la cirugía?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-select v-model="tipoAbordajeQuirurgico" :rules="[selectRule]" :items="typeOfSurgeryItems"></v-select>
 
-                <v-label class="mb-2 font-weight-medium">{{ $t('healthSystemAffiliation') }}</v-label>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('healthSystemAffiliation') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cuál es el tipo de afiliación del paciente en el Sistema de Salud colombiano?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-select v-model="afiliacionSalud" :rules="[selectRule]" :items="tiposAfiliacionSalud"></v-select>
 
-                <v-label class="mb-2 font-weight-medium">{{ $t('ASAScore') }}</v-label>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('ASAScore') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cómo se clasifica el paciente según el ASA score?
+                        </span>
+                    </v-tooltip>
+                </div>
                 <v-select v-model="asaScore" :rules="[selectRule]" :items="tiposAsaScore"></v-select>
 
-                <v-label class="mb-2 font-weight-medium">{{ $t('procedureComplexity') }}</v-label>
-                <v-select v-model="complejidadProcedimiento" :rules="[selectRule]" :items="tiposComplejidadProcedimiento"></v-select>
+                <div class="d-flex align-center">
+                    <v-label class="mb-2 font-weight-medium">{{ $t('procedureComplexity') }}</v-label>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                                mdi-help-circle-outline
+                            </v-icon>
+                        </template>
+                        <span>¿Cómo se clasifica el paciente según el ASA score?
+                        </span>
+                    </v-tooltip>
+                </div>
+                <v-select v-model="complejidadProcedimiento" :rules="[selectRule]"
+                    :items="tiposComplejidadProcedimiento"></v-select>
 
 
             </v-col>
@@ -406,4 +653,25 @@ onMounted(cargarDatosUsuario);
 
 </template>
 
-<style scoped></style>
+<style scoped>
+.icon {
+    font-size: 20px;
+}
+
+.icono_info {
+    cursor: pointer;
+}
+
+.icono_info:hover {
+    color: #3f51b5;
+}
+
+.v-label {
+    margin-bottom: 0 !important;
+}
+
+
+.checkbox {
+    display: flex !important;
+}
+</style>
