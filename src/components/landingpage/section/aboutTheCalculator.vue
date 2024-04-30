@@ -10,7 +10,7 @@ const isChecked = ref(false);
     <v-container class="d-flex flex-column">
         <v-row>
             <v-col class="d-flex justify-center align-center mb-5">
-                <h3 class="">About the creators</h3>
+                <h3 class="">{{ $t('aboutCreators') }}</h3>
             </v-col>
         </v-row>
 
@@ -25,7 +25,7 @@ const isChecked = ref(false);
                     </v-col>
                 </v-row>
                 <v-row class="creator__details">
-                    <h5>ABOUT THE CREATOR</h5>
+                    <h5>{{ $t('aboutCreator') }}</h5>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic fugit quod itaque ut? Quae dolorum
                         ipsa
                         pariatur, magnam possimus atque fugiat est eligendi ad earum officia laudantium eius assumenda
@@ -43,7 +43,7 @@ const isChecked = ref(false);
                     </v-col>
                 </v-row>
                 <v-row class="creator__details">
-                    <h5>ABOUT THE CREATOR</h5>
+                    <h5>{{ $t('aboutCreator') }}</h5>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic fugit quod itaque ut? Quae dolorum
                         ipsa
                         pariatur, magnam possimus atque fugiat est eligendi ad earum officia laudantium eius assumenda

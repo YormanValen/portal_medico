@@ -8,7 +8,7 @@
                         <span class="text-h6 d-flex align-center gap-2" data-aos="fade-up" data-aos-duration="400"
                             ><RocketIcon size="18" class="text-secondary" /> Kick start your project with</span
                         >
-                        <h1 class="bannerTitle pt-5 font-weight-bold" data-aos="fade-up" data-aos-duration="500">
+                        <h1 class= "bannerTitle pt-5 font-weight-bold" data-aos="fade-up" data-aos-duration="500">
                             Most powerful & <span class="text-primary">Developer friendly</span> VueJs dashboard
                         </h1>
                         <p class="pt-8 pb-6 text-h5 font-weight-regular" data-aos="fade-up" data-aos-duration="800">

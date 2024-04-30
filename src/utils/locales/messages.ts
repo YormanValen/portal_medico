@@ -6,10 +6,7 @@ import es from './es.json';
 
 const messages = {
     en: en,
-    es: es,
-    fr: fr,
-    ro: ar,
-    zh: zh
+    es: es
 };
 
 export default messages;

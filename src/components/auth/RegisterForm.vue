@@ -1,79 +1,160 @@
-import { useRouter } from 'vue-router'
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 
 /*Social icons*/
 import google from '@/assets/images/svgs/google-icon.svg';
 import facebook from '@/assets/images/svgs/facebook-icon.svg';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 /*Components*/
-const checkbox = ref(false);
 const valid = ref(true);
 const show1 = ref(false);
 const password = ref('');
 const email = ref('');
 const country = ref('');
 const city = ref('');
-const especiality = ref('');
+const especiality = ref([]);
 const yearsOfExperience = ref('');
 const orcid = ref('');
 const charge = ref('');
 const fname = ref('');
 const apiError = ref('');
 const agreeToPrivacyPolicy = ref(false); // Para manejar el estado del checkbox
-
-
-
-const especialities = ref(["Foo", "Bar", "Fizz", "Buzz"]);
+const afiliacion = ref('');
 const router = useRouter();
 
+const otherSpeciality = ref('');
+const profession = ref('');
+const otherHealthArea = ref('');
+const otherNonHealthArea = ref('');
+
+
+
+
+// Inicializa el array con el tipo específico
+const specialitiesOptions = ref<string[]>([]);
+
+
+const professions = computed(() => [
+    t('estudiante'),
+    t('doctor'),
+    t('nurse'),
+    t('pharmacist'),
+    t('psychologist'),
+    t('resident'),
+    t('researcher'),
+    t('specialist'),
+    t('managementAndAdministration'),
+    t('oralHealthProfessional'),
+    t('otherHealthRelatedAreas'),
+    t('otherNonHealthRelatedAreas')
+]);
+
+// Observa los cambios en profession y actualiza specialitiesOptions si es necesario
+watch(profession, (newProfession) => {
+    if (newProfession === t('resident') || newProfession === t('specialist')) {
+        // Aquí podrías cargar las especialidades desde una API o definir una lista estática
+        specialitiesOptions.value = [
+            'Alergología',
+            'Anestesiología',
+            'Cardiología',
+            'Cardiología intervencionista',
+            'Cardiología pediátrica',
+            'Cirugía cardiovascular',
+            'Cirugía de mano',
+            'Cirugía de trasplantes',
+            'Cirugía de trasplantes de órganos',
+            'Cirugía plástica',
+            'Cirugía vascular periférica',
+            'Coloproctologia',
+            'Dermatología',
+            'Electrofisiología cardíaca',
+            'Endocrinología',
+            'Gastroenterología',
+            'Ginecología y obstetricia',
+            'Hemato-oncología',
+            'Infectología',
+            'Infectología pediátrica',
+            'Medicina',
+            'Medicina Homeopática',
+            'Medicina Osteopática',
+            'Medicina aplicada a la actividad física y al deporte',
+            'Medicina crítica y cuidado',
+            'Medicina crítica y cuidado intensivo',
+            'Medicina de urgencias',
+            'Medicina del deporte y de la actividad física',
+            'Medicina del dolor y cuidados paliativos',
+            'Medicina familiar',
+            'Medicina maternofetal',
+            'Medicina tradicional china',
+            'Neonatología',
+            'Neumología',
+            'Neurología',
+            'Neurología pediátrica',
+            'Obstetricia y ginecología',
+            'Oftalmología',
+            'Ortopedia infantil',
+            'Ortopedia y traumatología',
+            'Otología',
+            'Otorrinolaringología',
+            'Patología',
+            'Psiquiatría',
+            'Psiquiatría de enlace',
+            'Psiquiatría de niños y adolescentes',
+            'Radiología',
+            'Radiología e imágenes',
+            'Radioterapia'
+        ];
+        console.log('Especialidades:', specialitiesOptions.value);
+        // reemplaza los puntos suspensivos con tus especialidades
+    } else {
+        specialitiesOptions.value = [];
+    }
+});
+
+const fiedRequired = ref([
+    (v: string) => !!v || t('fiedRequired'),
+]);
 
 const passwordRules = ref([
-    (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length <= 10) || 'Password must be less than 10 characters'
+    (v: string) => !!v || t('passwordRequired'),
+    (v: string) => (v && v.length <= 10) || t('passwordLength'),
 ]);
-const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
+const emailRules = ref([(v: string) => !!v || t('emailRequired'), (v: string) => /.+@.+\..+/.test(v) || t('emailInvalid')]);
 
 const fnameRules = ref([
-    (v: string) => !!v || 'Name is required',
-    (v: string) => isNaN(Number(v)) || 'Cannot be a number',
+    (v: string) => !!v || t('fiedRequired'),
+    (v: string) => isNaN(Number(v)) || t('fieldCannotBeANumber'),
 
 ]);
 
 const countryRules = ref([
-    (v: string) => !!v || 'Country is required',
-    (v: string) => isNaN(Number(v)) || 'Cannot be a number',
+    (v: string) => !!v || t('fiedRequired'),
+    (v: string) => isNaN(Number(v)) || t('fieldCannotBeANumber'),
 
 ]);
 
 const cityRules = ref([
-    (v: string) => !!v || 'City is required',
-    (v: string) => isNaN(Number(v)) || 'Cannot be a number',
+    (v: string) => !!v || t('fiedRequired'),
+    (v: string) => isNaN(Number(v)) || t('fieldCannotBeANumber'),
 ]);
 
 
 const yearsOfExperienceRules = ref([
-    (v: string) => !!v || 'Years of Experience is required',
-    (v: string) => !isNaN(Number(v)) || 'Must be a number',
+    (v: string) => !!v || t('fiedRequired'),
+    (v: string) => !isNaN(Number(v)) || t('fieldMustBeNumber'),
 ]);
 
-const orcidRules = ref([
-    (v: string) => !!v || 'Orcid is required',
-]);
-
-const chargeRules = ref([
-    (v: string) => !!v || 'charge is required',
-    (v: string) => isNaN(Number(v)) || 'Cannot be a number',
-
-]);
 
 
 const submitRegistration = () => {
 
     if (!valid.value) {
-        apiError.value = 'Por favor, rellene el formulario correctamente.';
+        apiError.value = t('formError');
         return; // Detiene la función si el formulario no es válido.
     }
 
@@ -83,10 +164,15 @@ const submitRegistration = () => {
         name: fname.value,
         country: country.value,
         city: city.value,
-        especiality: especiality.value,
         yearsOfExperience: yearsOfExperience.value,
         orcid: orcid.value,
-        charge: charge.value
+        afiliacion: afiliacion.value,
+        profession: profession.value,
+        otherHealthArea: otherHealthArea.value,
+        otherNonHealthArea: otherNonHealthArea.value,
+        especiality: (profession.value === t('resident') || profession.value === t('specialist')) ? especiality.value : '',
+        otherSpeciality: otherSpeciality.value, // Asegúrate de que esta línea corresponda a tu lógica de negocio
+
     };
 
     fetch('/users/register', {
@@ -117,62 +203,80 @@ const submitRegistration = () => {
         <v-col cols="6" sm="6">
             <v-btn variant="outlined" size="large" class="border text-subtitle-1" block>
                 <img :src="google" height="20" class="mr-2" alt="google" />
-                <span class="d-sm-flex d-none mr-1">Sign up with</span>Google
+                <span class="d-sm-flex d-none mr-1">{{ $t('signInGoogle') }}</span>
             </v-btn>
         </v-col>
         <v-col cols="6" sm="6">
             <v-btn variant="outlined" size="large" class="border text-subtitle-1" block>
                 <img :src="facebook" width="25" height="30" class="mr-1" alt="facebook" />
-                <span class="d-sm-flex d-none mr-1">Sign up with</span>FB
+                <span class="d-sm-flex d-none mr-1">{{ $t('signInFB') }}</span>
             </v-btn>
         </v-col>
     </v-row>
     <div class="d-flex align-center text-center mb-6">
         <div class="text-h6 w-100 px-5 font-weight-regular auth-divider position-relative">
-            <span class="bg-surface px-5 py-3 position-relative">or sign in with</span>
+            <span class="bg-surface px-5 py-3 position-relative">{{ $t('orSignIn') }}</span>
         </div>
     </div>
-    <v-form ref="form" v-model="valid" lazy-validation @submit="" action="/pages/boxedlogin" class="mt-5">
+    <v-form ref="form" v-model="valid" lazy-validation @submit.prevent action="/pages/boxedlogin" class="mt-5">
         <v-row>
             <v-col>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Name</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('name') }}</v-label>
                 <VTextField v-model="fname" :rules="fnameRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Email Adddress</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('Email') }}</v-label>
                 <VTextField v-model="email" :rules="emailRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Password</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('password') }}</v-label>
                 <VTextField type="password" v-model="password" :rules="passwordRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Country</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('country') }}</v-label>
                 <VTextField v-model="country" :rules="countryRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">City</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('city') }}</v-label>
                 <VTextField v-model="city" :rules="cityRules" required></VTextField>
             </v-col>
             <v-col>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Especiality</v-label>
-                <v-select :items="especialities" v-model="especiality" label="Select Item" required></v-select>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Years of Experience</v-label>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('profession') }}</v-label>
+                <v-select v-model="profession" :items="professions" required></v-select>
+                <!-- Muestra el select de especialidades si la profesión seleccionada es 'Residente' o 'Especialista' -->
+                <v-label v-if="profession === t('resident') || profession === t('specialist')"
+                    class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especificarEspecialidad') }}</v-label>
+                <v-select v-if="profession === t('resident') || profession === t('specialist')" v-model="especiality"
+                    :items="specialitiesOptions" multiple persistent-hint></v-select>
+                <!-- Muestra un campo de texto si la profesión seleccionada es 'Otras áreas relacionadas con la salud' -->
+                <v-label v-if="profession === 'Otras áreas relacionadas con la salud'"
+                    class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especificarArea') }}</v-label>
+                <v-text-field v-if="profession === 'Otras áreas relacionadas con la salud'" v-model="otherHealthArea"
+                    required></v-text-field>
+
+                <!-- Muestra un campo de texto si la profesión seleccionada es 'Otras áreas no relacionadas con la salud' -->
+                <v-label v-if="profession === 'Otras áreas no relacionadas con la salud'"
+                    class="text-subtitle-1 font-weight-medium pb-2">{{ $t('especificarArea') }}</v-label>
+                <v-text-field v-if="profession === 'Otras áreas no relacionadas con la salud'"
+                    v-model="otherNonHealthArea" required></v-text-field>
+
+
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('yearsExperience') }}</v-label>
                 <VTextField v-model="yearsOfExperience" :rules="yearsOfExperienceRules" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Orcid</v-label>
-                <VTextField v-model="orcid" required></VTextField>
-                <v-label class="text-subtitle-1 font-weight-medium pb-2">Charge</v-label>
-                <VTextField v-model="charge" required></VTextField>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('orcid') }}</v-label>
+                <VTextField v-model="orcid" :rules="fiedRequired" required></VTextField>
+                <v-label class="text-subtitle-1 font-weight-medium pb-2">{{ $t('afiliacion') }}</v-label>
+                <VTextField v-model="afiliacion" :rules="fiedRequired" required></VTextField>
+
             </v-col>
         </v-row>
         <v-row>
-            <v-checkbox v-model="agreeToPrivacyPolicy"
-                :rules="[v => v || 'Debes aceptar las políticas de privacidad para continuar']"
-                class="mb-3 privacy-checkbox">
+            <v-checkbox v-model="agreeToPrivacyPolicy" :rules="[v => v || t('advertisingPrivacyPolicy')]"
+                class="mb-3 w-100 privacy-checkbox">
                 <template v-slot:label>
                     <div class="d-flex align-center justify-content-between">
-                        <span class="flex-grow-1 ">Tus datos son muy importantes para nosotros y los tratamos con la máxima seguridad y
-                            confidencialidad. ¿Aceptas nuestras <RouterLink class="link-privacy-policy" color="primary" to="/privacy-policy">políticas de
-                                privacidad?</RouterLink> </span>
+                        <span class="flex-grow-1 ">{{ $t('privacyText') }}<RouterLink class="link-privacy-policy"
+                                color="primary" to="/privacy-policy">{{ $t('privacyPolicy') }}</RouterLink> </span>
                     </div>
                 </template>
             </v-checkbox>
         </v-row>
 
-        <v-btn size="large" @click.prevent="submitRegistration" class="mt-2" color="primary" block submit flat>Sign
-            up
+        <v-btn size="large" @click.prevent="submitRegistration" class="mt-2" color="primary" block submit flat>{{
+            $t('Sign Up')
+            }}
         </v-btn>
 
         <div v-if="apiError" class="mt-2 alert-box">
@@ -182,13 +286,13 @@ const submitRegistration = () => {
 </template>
 
 <style scoped>
-
 .privacy-checkbox {
     padding: 0 .5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .privacy-checkbox .v-selection-control {
     flex-direction: row-reverse !important;
 }
@@ -197,7 +301,4 @@ const submitRegistration = () => {
     color: rgb(var(--v-theme-primary)) !important;
     text-decoration: none;
 }
-
-
-
 </style>

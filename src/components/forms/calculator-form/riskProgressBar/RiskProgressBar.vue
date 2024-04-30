@@ -1,40 +1,75 @@
 <!-- RiskProgressBar.vue -->
-
 <template>
-    <div class="risk-progress-container">
-        <div class="progress-bar-ctn">
-            <span>{{ label }}</span>
-            <div class="risk-progress-bar">
-                <div class="progress-bar" :style="{ width: progressPercentage + '%' }"
-                    :class="{ 'below-average': isBelowAverage }">
-
-                </div>
-                <div class="risk-limit-line" :style="{ left: riskLimitPercentage + '%' }"></div>
+    <div class="risk-progress-container d-grid gap-2 " :class="label">
+        <div class="progress-label font-weight-bold d-flex justify-end gap-2">{{ label }}</div>
+        <div class="risk-progress-bar">
+            <div :style="{ width: progressPercentage + '%' }" class="progress-bar"
+                :class="{ 'below-average': isBelowAverage }"></div>
+        </div>
+        <div class="progress-text d-flex gap-3">
+            <div class="your-risk d-flex flex-column align-center">
+                <span class="font-weight-bold text-primary">{{ $t('yourRisk') }}</span>
+                <span class="font-weight-bold">{{ yourRiskText }}</span>
             </div>
-            <span class="risk-percentage">{{ progressPercentage }}%</span>
+            <div class="average-risk d-flex flex-column align-center ">
+                <span class="font-weight-bold text-primary">{{ $t('averageRisk') }}</span>
+                <span class="font-weight-bold">{{ averageRiskText }}</span>
+            </div>
+            <div class="chance-outcome d-flex flex-column align-center">
+                <span class="font-weight-bold text-primary">{{ $t('chanceOfCome') }}</span>
+                <span class="font-weight-bold">{{ chanceOfOutcomeText }}</span>
+            </div>
         </div>
     </div>
 </template>
 
+
 <script setup>
-import { defineProps, computed } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
+import { useReportStore } from '@/stores/reportStore';
+
 
 const props = defineProps({
     label: String,
-    progressPercentage: Number,
-    riskLimitPercentage: String
+    riskLimitPercentage: String,
+    name: String,
 });
 
-const isBelowAverage = computed(() => props.progressPercentage < props.riskLimitPercentage);
+const reportStore = useReportStore();
+
+// Estas son variables reactivas que se actualizarán una vez que la acción se complete.
+const progressPercentage = ref(0);
+const yourRiskText = ref('N/A');
+const averageRiskText = ref('N/A');
+const chanceOfOutcomeText = ref('N/A');
+
+onMounted(async () => {
+
+    console.log(props.name)
+    // Obtener los porcentajes de riesgo llamando a la acción del store.
+    const riskPercentages = await reportStore.getRiskPercentages();
+    // Ahora que tenemos la respuesta, podemos extraer los datos para la etiqueta específica.
+    const riskData = riskPercentages[props.name];
+
+    if (riskData) {
+        // Actualizar las variables reactivas con los datos de riesgo obtenidos.
+        progressPercentage.value = riskData.progressPercentage;
+        yourRiskText.value = riskData.yourRisk;
+        averageRiskText.value = riskData.averageRisk;
+        chanceOfOutcomeText.value = riskData.chanceOfOutcome;
+    }
+});
 </script>
 
 <style scoped>
-.progress-bar-ctn{
+.progress-bar-ctn {
     width: 100%;
 }
 
 .risk-progress-container {
-    display: flex;
+    display: grid;
+
+    grid-template-columns: 16% 1fr 30%;
     align-items: center;
     margin-bottom: 1rem;
 }

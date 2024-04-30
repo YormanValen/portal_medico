@@ -11,12 +11,15 @@ function fakeBackend() {
 
             function handleRoute() {
                 switch (true) {
+                    case url.endsWith('/risk-percentages') && opts.method === 'GET':
+                        return getRiskPercentages();
                     case url.endsWith('/users/authenticate') && opts.method === 'POST':
                         return authenticate();
                     case url.endsWith('/users') && opts.method === 'GET':
                         return getUsers();
                     case url.endsWith('/users/register') && opts.method === 'POST':
                         return registerUser();
+
                     default:
                         // pass through any requests not handled above
                         return realFetch(url, opts)
@@ -43,10 +46,6 @@ function fakeBackend() {
                     token: 'fake-jwt-token'
                 });
             }
-
-
-          
-            
 
             function getUsers() {
                 if (!isAuthenticated()) return unauthorized();
@@ -100,6 +99,16 @@ function fakeBackend() {
                 localStorage.setItem('users', JSON.stringify(users));
 
                 return ok(newUser);
+            }
+
+            function getRiskPercentages() {
+                console.log('entre');
+                const riskDataByLabel = {
+                    // Ejemplo de estructura para la etiqueta "Mortalidad"
+                   
+                };
+
+                return ok(riskDataByLabel);
             }
         });
     };
