@@ -87,19 +87,22 @@ const user = computed(() => authStore.user);
     <!-- <v-btn variant="text" color="primary" class="custom-hover-primary nav-links"
         href="https://demos.adminmart.com/premium/vue/modernize-vuejs/docs/index.html"
         target="_blank">Documentation</v-btn> -->
-    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/" >{{ $t('Home')
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/">{{ $t('Home')
         }}</v-btn>
-    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="" >{{ $t('About Us')
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="">{{ $t('About Us')
         }}</v-btn>
     <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/calculatorPage">{{ $t('Calculators')
         }}</v-btn>
-    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="" >{{ $t('Research')
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="">{{ $t('Research')
         }}</v-btn>
-    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="" >{{ $t('Services')
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="">{{ $t('Services')
+        }}</v-btn>
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/desenlaces">{{ $t('Desenlaces')
         }}</v-btn>
     <v-btn v-if="!user" class="custom-hover-primary bg-primary mr-3 text-white" flat to="auth/login2"
         target="_blank"><span class="text-white">{{ $t('Login') }}</span></v-btn>
-    <v-btn v-if="!user" variant="outlined" to="auth/register2" target="_blank" color="primary">{{ $t('Sign Up') }}</v-btn>
+    <v-btn v-if="!user" variant="outlined" to="auth/register2" target="_blank" color="primary">{{ $t('Sign Up')
+        }}</v-btn>
 
 </template>
 

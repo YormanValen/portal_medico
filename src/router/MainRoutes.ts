@@ -128,7 +128,12 @@ const MainRoutes = {
             name:'CalculatorPage',
             path:'/calculatorPage',
             component:()=>import('@/views/pages/calculatorPage/CalculatorsPage.vue')
-        }
+        },
+        {
+            name:'Desenlaces',
+            path:'/desenlaces',
+            component:()=>import('@/views/desenlaces/Desenlaces.vue')
+        },
 
         /* {
             name: 'Autocomplete',

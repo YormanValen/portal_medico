@@ -24,5 +24,13 @@ type filtrable = {
     stock: boolean,
 };
 
+type filtrablePrueba = {
+    ID: string;
+    Edad: string,
+    Fecha: Date,
+    Procedimiento: string,
+    Completado: boolean,
+};
 
-export type { Datatables, SelectedRowDatatable, filtrable };
+
+export type { Datatables, SelectedRowDatatable, filtrable, filtrablePrueba };

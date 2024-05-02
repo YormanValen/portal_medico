@@ -2,6 +2,8 @@ export { fakeBackend };
 
 function fakeBackend() {
     let users = JSON.parse(localStorage.getItem('users') || '[]');
+    let patients = JSON.parse(localStorage.getItem('patients') || '[]');  // Asumiendo que tienes una lista de pacientes
+
 
     let realFetch = window.fetch;
     window.fetch = function (url: any, opts: any) {
@@ -15,6 +17,8 @@ function fakeBackend() {
                         return getRiskPercentages();
                     case url.endsWith('/users/authenticate') && opts.method === 'POST':
                         return authenticate();
+                    case url.match(/\/patients\/\d+$/) && opts.method === 'GET':
+                        return getPatientDetails(url);
                     case url.endsWith('/users') && opts.method === 'GET':
                         return getUsers();
                     case url.endsWith('/users/register') && opts.method === 'POST':
@@ -26,6 +30,13 @@ function fakeBackend() {
                             .then((response) => resolve(response))
                             .catch((error) => reject(error));
                 }
+            }
+
+            function getPatientDetails(url: any) {
+                const id = parseInt(url.split('/').pop());  // Obtiene el ID del URL
+                const patient = patients.find((p: any) => p.id === id);
+                if (!patient) return error('Patient not found');
+                return ok(patient);
             }
 
             // route functions
@@ -105,7 +116,6 @@ function fakeBackend() {
                 console.log('entre');
                 const riskDataByLabel = {
                     // Ejemplo de estructura para la etiqueta "Mortalidad"
-                   
                 };
 
                 return ok(riskDataByLabel);
