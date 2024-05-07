@@ -50,49 +50,39 @@ let momentoIntervencionState = 0;
 
 // Funciones para manejar los cambios en las casillas de verificación
 const handleTabacoChange = (value: any) => {
-    console.log('Tabaco entre');
     tabacoState = value ? 1 : 0;
-    console.log('Tabaco:', tabacoState);
 };
 
 const handleHipertensionChange = (value: any) => {
     hipertensionState = value ? 1 : 0;
-    console.log('Hipertensión:', hipertensionState);
 };
 
 const handleArritmiaChange = (value: any) => {
     arritmiaState = value ? 1 : 0;
-    console.log('Arritmia:', arritmiaState);
 };
 
 const handleFallaCardiacaChange = (value: any) => {
     fallaCardiacaState = value ? 1 : 0;
-    console.log('Falla Cardiaca:', fallaCardiacaState);
 };
 
 const handleDislipidemiaChange = (value: any) => {
     dislipidemiaState = value ? 1 : 0;
-    console.log('Dislipidemia:', dislipidemiaState);
 };
 
 const handleDiabetesChange = (value: any) => {
     diabetesState = value ? 1 : 0;
-    console.log('Diabetes:', diabetesState);
 };
 
 const handleEpocChange = (value: any) => {
     epocState = value ? 1 : 0;
-    console.log('EPOC:', epocState);
 };
 
 const handleErcChange = (value: any) => {
     ercState = value ? 1 : 0;
-    console.log('ERC:', ercState);
 };
 
 const handleInestabilidadHemodinamicaChange = (value: any) => {
     inestabilidadHemodinamicaState = value ? 1 : 0;
-    console.log('Inestabilidad Hemodinámica:', inestabilidadHemodinamicaState);
 };
 
 
@@ -540,7 +530,6 @@ onMounted(async () => {
                 <v-text-field v-model="imc" variant="outlined" color="success" readonly></v-text-field>
 
                 <div class="d-flex align-center">
-                    <!-- Checkbox para tabaco -->
                     <v-label class="mb-2 font-weight-medium">{{ $t('interventionTime') }}</v-label>
                     <v-tooltip location="top">
                         <template v-slot:activator="{ props }">

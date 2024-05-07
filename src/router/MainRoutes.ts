@@ -134,6 +134,12 @@ const MainRoutes = {
             path:'/desenlaces',
             component:()=>import('@/views/desenlaces/Desenlaces.vue')
         },
+        {
+            name:'sobre-nosotros',
+            path:'/sobre-nosotros',
+            component:()=>import('@/views/pages/sobre-nosotros/Sobre-nosotros.vue')
+
+        }
 
         /* {
             name: 'Autocomplete',

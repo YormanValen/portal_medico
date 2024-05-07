@@ -25,7 +25,7 @@ type filtrable = {
 };
 
 type filtrablePrueba = {
-    ID: string;
+    ID: number;
     Edad: string,
     Fecha: Date,
     Procedimiento: string,

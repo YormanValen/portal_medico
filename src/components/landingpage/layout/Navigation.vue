@@ -89,7 +89,7 @@ const user = computed(() => authStore.user);
         target="_blank">Documentation</v-btn> -->
     <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/">{{ $t('Home')
         }}</v-btn>
-    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="">{{ $t('About Us')
+    <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/sobre-nosotros">{{ $t('About Us')
         }}</v-btn>
     <v-btn variant="text" color="text" class="custom-hover-primary nav-links" to="/calculatorPage">{{ $t('Calculators')
         }}</v-btn>

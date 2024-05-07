@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { FiltrablePrueba } from '@/_mockApis/components/datatable/dataTable';
 import DetailsComponent  from '@/components/desenlaces/DetailsComponent.vue';
 import {useAuthStore} from '@/stores/auth';
+import {useDesenlaceStore} from '@/stores/desenlaceStore';
+
 
 const authStore = useAuthStore();
+const desenlaceStore = useDesenlaceStore();
 
 const filtrable = ref('');
 
 
 const currentFilter = ref('all');  // Opciones: 'all', 'pending', 'myResults'
 const currentView = ref('table');  // 'table' para la tabla, 'details' para los detalles
-const selectedId = ref(null);
+const selectedId = ref(0);
 
-function openDetails(id:any ) {
-    selectedId.value = id;
+
+function openDetails(id:Number ) {
+    selectedId.value = parseInt(id as any);
+    console.log('ID seleccionado:', typeof(selectedId.value));
     currentView.value = 'details';
 }
 
@@ -26,7 +31,7 @@ function closeDetails() {
 
 
 const filteredItems = computed(() => {
-    return FiltrablePrueba.filter(item => {
+    return useDesenlaceStore().desenlaces.filter(item => {
         if (currentFilter.value === 'all') {
             console.log('all')
             return true; // Muestra todos los ítems
@@ -39,12 +44,16 @@ const filteredItems = computed(() => {
     });
 });
 
+onMounted(async () => {
+  await desenlaceStore.fetchDesenlaces(); // Llama a la acción del store
+});
+
+
 </script>
 <template>
     <v-row>
         <v-col cols="12">
 
-            <UiParentCard class="mt-6">
 
                 <v-card flat>
                     <v-card-title class="pa-2">
@@ -68,7 +77,7 @@ const filteredItems = computed(() => {
                     <v-data-table v-model:search="filtrable" :items="filteredItems">
 
                         <template v-slot:item.ID="{ item }">
-                            <v-btn class="" variant="tonal" color="primary" text @click="openDetails(item.ID)"> {{
+                            <v-btn class="" variant="tonal" color="primary" number @click="openDetails(item.ID)"> {{
                                 item.ID }} </v-btn>
                         </template>
 
@@ -99,7 +108,6 @@ const filteredItems = computed(() => {
                     </div>
                 </v-card>
 
-            </UiParentCard>
 
 
         </v-col>

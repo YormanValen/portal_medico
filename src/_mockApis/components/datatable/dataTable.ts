@@ -310,36 +310,36 @@ const GroupTable: Datatables[] = [
 
 const FiltrablePrueba: filtrablePrueba[] = [
     {
-        ID: '2222',
-        Edad: '20',
+        ID: 222,
+        Edad: 20,
         Fecha: new Date().toLocaleDateString('es-ES'),
         Procedimiento: '25425 APENDICECTOMIA',
         Completado: true
     },
     {
-        ID: '2566',
-        Edad: '25',
+        ID: 2566,
+        Edad: 25,
         Fecha: new Date().toLocaleDateString('es-ES'),
         Procedimiento: '2178 COLECISTECTOMIA ',
         Completado: false
     },
     {
-        ID: '3334',
-        Edad: '30',
+        ID: 3334,
+        Edad: 30,
         Fecha: new Date().toLocaleDateString('es-ES'),
         Procedimiento: '3145 HISTERECTOMIA TOTAL',
         Completado: true
     },
     {
-        ID: '4334',
-        Edad: '35',
+        ID: 4334,
+        Edad: 35,
         Fecha: new Date().toLocaleDateString('es-ES'),
         Procedimiento: '4587 HISTERECTOMIA TOTAL',
         Completado: false
     },
     {
-        ID: '5443',
-        Edad: '40',
+        ID: 5443,
+        Edad: 40,
         Fecha: new Date().toLocaleDateString('es-ES'),
         Procedimiento: '3654 COLUPOPLASTIA ',
         Completado: true
