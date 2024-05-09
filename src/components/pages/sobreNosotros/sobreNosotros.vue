@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import carousel from '@/components/pages/sobreNosotros/carousel.vue';
+import trayectoria from '@/components/pages/sobreNosotros/LineaTiempo.vue';
 
 const { t } = useI18n();
+
+
 
 </script>
 <template>
@@ -45,6 +48,7 @@ const { t } = useI18n();
                 </div>
             </div>
         </div>
+        <trayectoria />
         <div class="carrousel_ctn">
             <carousel />
         </div>

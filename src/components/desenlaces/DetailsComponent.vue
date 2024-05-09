@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '../../stores/auth';
 import { useCalculatorsStore } from '../../stores/calculatorStore';
 import { useI18n } from 'vue-i18n';
@@ -8,6 +9,7 @@ import { defineProps } from 'vue';
 import * as Yup from "yup";
 import { Form } from "vee-validate";
 import { useDesenlaceStore } from '@/stores/desenlaceStore';
+
 
 
 const { t } = useI18n();
@@ -24,13 +26,13 @@ const props = defineProps({
 });
 
 
-
-const tipoAnestesia = ref('');
+const instanciaHospitalaria = ref(0);
+const tipoAnestesia = ref(null);
 const role = ref('');
 const necesidaduci = ref(false);
 const aspiracion = ref(false);
 const compintuba = ref(null);
-const iso = ref(null);
+const iso = ref(false);
 const ivu = ref(false);
 const neumonia = ref(false);
 const sepsis = ref(false);
@@ -39,7 +41,7 @@ const ecv = ref(false);
 const arritmiascardicas = ref(false);
 const iam = ref(false);
 const parocardpostope = ref(false);
-const ira = ref(null);
+const ira = ref(false);
 const dialisis = ref(false);
 const sdra = ref(false);
 const embolismopulmonar = ref(false);
@@ -52,7 +54,6 @@ const mortintrahosp = ref(false);
 const fistula_orig = ref(null);
 const fistula_fin = ref(null);
 const claviendindo = ref(null);
-const completado = ref(false);
 
 
 let necesidaduciState = 0;
@@ -73,12 +74,15 @@ let dehiscenciaanastomosisState = 0;
 let fistulaState = 0;
 let reintervencintrahospState = 0;
 let mortintrahospState = 0;
+let isoState = 0;
+let iraState = 0;
 
 
 //metodos para manejar los checkbox
 const handleNecenecesidaduci = (value: any) => {
   necesidaduciState = value ? 1 : 0;
 };
+
 
 const handleaspiracion = (value: any) => {
   aspiracionState = value ? 1 : 0;
@@ -148,14 +152,24 @@ const handleMortintrahosp = (value: any) => {
   mortintrahospState = value ? 1 : 0;
 };
 
+const handleIso = (value: any) => {
+  isoState = value ? 1 : 0;
+};
+
+const handleIra = (value: any) => {
+  iraState = value ? 1 : 0;
+};
+
 const completarDesenlace = async () => {
-  completado.value = completado.value; // Esto cambiará el valor entre true y false
   const desenlaceEncontrado = await desenlaceStore.getDesenlaceById(props.id); // Llama a la acción del store
   console.log('desenlace encontrado', desenlaceEncontrado)
   if (desenlaceEncontrado.Completado === false) {
-    desenlaceEncontrado.Completado = completado.value;
+    desenlaceEncontrado.Completado = true;
     console.log('desenlace final', desenlaceEncontrado)
     await desenlaceStore.updateDesenlace(desenlaceEncontrado); // Llama a la acción del store
+    //recarga la pagina
+    location.reload();
+
   }
 
 };
@@ -163,9 +177,10 @@ const completarDesenlace = async () => {
 
 //metodos para los tipos de seleccionables
 const tiposAnestesia = computed(() => [
-  t('male'),
-  t('female'),
-  t('other')
+  { text: t('selectTipoAnestesia'), value: null },
+  { text: t('General'), value: 1 },
+  { text: t('Local'), value: 2 },
+  { text: t('Raquidea'), value: 3 }
 ]
 );
 
@@ -190,13 +205,13 @@ const tiposComplicacion = computed(() => [
   { text: t('No'), value: 4 },
 ]);
 
-const tiposIso = computed(() => [
-  { text: t('selecInfeccion'), value: null },
-  { text: t('Superficial'), value: 1 },
-  { text: t('Profunda'), value: 2 },
-  { text: t('Órgano-Espacio'), value: 3 },
-  { text: t('No'), value: 4 },
-]);
+// const tiposIso = computed(() => [
+//   { text: t('selecInfeccion'), value: null },
+//   { text: t('Superficial'), value: 1 },
+//   { text: t('Profunda'), value: 1 },
+//   { text: t('Órgano-Espacio'), value: 1 },
+//   { text: t('No'), value: 0 },
+// ]);
 
 
 const tiposRoles = computed(() => [
@@ -249,12 +264,26 @@ const tiposClaviendindo = computed(() => [
 
 ]);
 
+// Regla de validación para el campo de número
+const inputNumberRule = (v: string) => {
+    if (!v) return t('fiedRequired');
+    if (isNaN(Number(v))) return t('fieldMustBeNumber');
+    return true;
+};
 // Propiedad computada que filtra las opciones de claviendindo
 const opcionesClaviendindo = computed(() => {
   if (mortintrahosp.value) {
     // Si el checkbox está activo, devuelve solo el Grado 5
     return tiposClaviendindo.value.filter(opcion => opcion.value === 5);
-  } else {
+  }
+  else if(reintervencintrahosp.value){
+    return tiposClaviendindo.value.filter(opcion => opcion.value !== null && opcion.value >= 3);
+  }
+  else if(necesidaduci.value || aspiracion.value || ivu.value  || neumonia.value || sepsis.value || ecv.value || arritmiascardicas.value || iam.value || parocardpostope.value || dialisis.value || sdra.value || embolismopulmonar.value || hemorragia.value || ileopop.value || dehiscenciaanastomosis.value || fistula.value){
+    return tiposClaviendindo.value.filter(opcion => opcion.value !== null && opcion.value !== 6);
+
+  }
+   else{
     // Si el checkbox está inactivo, devuelve todas las opciones
     return tiposClaviendindo.value;
   }
@@ -313,7 +342,7 @@ onMounted(async () => {
         <v-row>
           <v-col>
             <v-label class="mb-2 font-weight-medium">{{ $t('tipoAnestesia') }}</v-label>
-            <v-select v-model="tipoAnestesia" :items="tiposAnestesia" variant="outlined"
+            <v-select v-model="tipoAnestesia" :items="tiposAnestesia" item-title="text" item-value="value" variant="outlined"
               :placeholder="$t('SelecTipoAnestesia')" color="primary"></v-select>
           </v-col>
           <v-col>
@@ -658,37 +687,62 @@ onMounted(async () => {
       </v-row>
 
       <v-row>
-        <v-col col="6">
-          <v-label class="mb-2 font-weight-medium">{{ $t('compintuba') }}</v-label>
-          <v-select v-model="compintuba" :items="tiposComplicacion" item-title="text" item-value="value"
-            variant="outlined" color="primary"></v-select>
+
+        <v-col col="4">
+          <div class="d-flex align-center">
+            <v-checkbox class="checkbox" v-model="iso
+              " :label="$t('iso')" @change="handleIso(iso)"></v-checkbox>
+            <v-tooltip location="top">
+              <template v-slot:activator="{ props }">
+                <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                  mdi-help-circle-outline
+                </v-icon>
+              </template>
+              <span>{{ $t('isoMsg') }}
+              </span>
+            </v-tooltip>
+          </div>
         </v-col>
 
-        <v-col col="6">
-          <v-label class="mb-2 font-weight-medium">{{ $t('iso') }}</v-label>
-          <v-select v-model="iso" :items="tiposIso" item-title="text" item-value="value" variant="outlined"
-            color="primary"></v-select>
+        <v-col col="4">
+          <div class="d-flex align-center">
+            <v-checkbox class="checkbox" v-model="ira
+              " :label="$t('ira')" @change="handleIra(ira)"></v-checkbox>
+            <v-tooltip location="top">
+              <template v-slot:activator="{ props }">
+                <v-icon class="icon ml-2" v-bind="props" color="grey-lighten-1">
+                  mdi-help-circle-outline
+                </v-icon>
+              </template>
+              <span>{{ $t('iraMsg') }}
+              </span>
+            </v-tooltip>
+          </div>
         </v-col>
+
+        <v-col col=4></v-col>
+
       </v-row>
+
 
       <v-row>
 
-        <v-col col="6">
-          <v-label class="mb-2 font-weight-medium">{{ $t('ira') }}</v-label>
-          <v-select v-model="ira" :items="tiposIra" item-title="text" item-value="value" variant="outlined"
-            color="primary"></v-select>
-        </v-col>
 
         <v-col col="6">
           <v-label class="mb-2 font-weight-medium">{{ $t('claviendindo') }}</v-label>
           <v-select v-model="claviendindo" :items="opcionesClaviendindo" item-title="text" item-value="value"
             variant="outlined" color="primary"></v-select>
         </v-col>
+
+        <v-col col="6">
+          <v-label class="mb-2 font-weight-medium">{{ $t('instanciaHospitalaria') }}</v-label>
+          <TextInput name="instanciaHospitalaria" v-model="instanciaHospitalaria" type="number" :rules="inputNumberRule" :placeholder="t('instanciaText')"/>
+
+        </v-col>
       </v-row>
 
-      <v-row>
-        <v-checkbox class="checkbox  " v-model="completado
-          " :label="$t('completado')" @change="completarDesenlace"></v-checkbox>
+      <v-row v-if="claviendindo && claviendindo.value !== null">
+        <v-btn color="success" @click="completarDesenlace">{{ $t('completado') }}</v-btn>
       </v-row>
 
 

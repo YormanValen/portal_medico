@@ -254,7 +254,7 @@
     "llamaAnestesiologo": "Yes, it required calling another anesthesiologist",
     "dispositivoSupraglotico": "Yes, it required the use of a supraglottic device",
     "aereaQuirurgica": "Yes, it required manipulation of the surgical airway",
-    "iso": "Did the patient present any type of surgical site infection?",
+    "iso": "Surgical site infection",
     "selecIso": "Select the type of surgical site infection",
     "Superficial": "Superficial",
     "Profunda": "Deep",
@@ -284,6 +284,8 @@
     "parocardpostope": "Cardiac arrest",
     "parocardpostopeMsg": "Did the patient present a cardiac arrest after the surgical intervention?",
     "selecIRA": "Select the type of acute renal injury",
+    "iraMsg": "Did the patient present acute renal injury after the surgical intervention?",
+    "ira": "Acute renal injury",
     "sdra": "Acute respiratory distress syndrome",
     "sdraMsg": "Did the patient present acute respiratory distress syndrome after the surgical intervention?",
     "reintervencintrahosp": "Intrahospital surgical reintervention",
@@ -309,6 +311,14 @@
     "completado": "Completed",
     "quienesSomos": "Who we are",
     "mision": "Mission",
-    "vision": "Vision"
+    "vision": "Vision",
+    "trayectoria": "Trajectory",
+    "año": "Year",
+    "General": "General",
+    "Local": "Local",
+    "Raquidea": "Spinal",
+    "selectTipoAnestesia": "Select the type of anesthesia",
+    "instanciaHospitalaria": "Hospital Instance",
+    "instanciaText": "How many days was the patient hospitalized?"
 
 }

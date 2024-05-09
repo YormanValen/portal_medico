@@ -252,7 +252,10 @@
     "llamaAnestesiologo": " Si, requirió llamado a otro anestesiólogo",
     "dispositivoSupraglotico": "Si, requirió uso de dispositivo supraglótico",
     "aereaQuirurgica": "Si, requirió manipulación de la vía aérea quirúrgica",
-    "iso": "¿El paciente presentó algún tipo de infección del sitio operatorio?",
+    "iso": "Infección del sitio operatorio",
+    "isoMsg": "¿El paciente presentó algún tipo de infección del sitio operatorio?",
+    "iraMsg": "¿El paciente presentó lesión renal aguda después de la intervención quirúrgica?",
+    "ira": "lesion renal aguda",
     "selecIso": "Seleccione el tipo de infección del sitio operatorio",
     "Superficial": "Superficial",
     "Profunda": "Profunda",
@@ -281,8 +284,6 @@
     "iamMsg": "¿El paciente presentó un infarto agudo de miocardio después de la intervención quirúrgica?",
     "parocardpostope": "Paro Cardiaco Postoperatorio",
     "parocardpostopeMsg": "¿El paciente presentó un paro cardíaco postoperatorio?",
-    "ira": "¿El paciente tuvo lesión renal aguda después de la intervención quirúrgica?",
-
     "dialisis": "Diálisis",
     "dialisisMsg": "¿El paciente requirió diálisis después de la intervención quirúrgica?",
     "sdra": "Síndrome de Dificultad Respiratoria Aguda",
@@ -321,5 +322,14 @@
     "completado": "Completado",
     "quienesSomos": "Quiénes Somos",
     "mision": "Misión",
-    "vision": "Visión"
+    "vision": "Visión",
+    "trayectoria": "Trayectoria",
+    "año": "Año",
+    "General": "General",
+    "Local": "Local",
+    "Raquidea": "Raquídea",
+    "selectTipoAnestesia": "Seleccione el tipo de anestesia",
+    "instanciaHospitalaria": "Instancia Hospitalaria",
+    "instanciaText":"¿Cuántos días estuvo el paciente hospitalizado?"
+ 
 }
