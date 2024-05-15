@@ -329,7 +329,10 @@
     "Local": "Local",
     "Raquidea": "Raquídea",
     "selectTipoAnestesia": "Seleccione el tipo de anestesia",
-    "instanciaHospitalaria": "Instancia Hospitalaria",
-    "instanciaText":"¿Cuántos días estuvo el paciente hospitalizado?"
- 
+    "instanciaHospitalaria": "Estancia Hospitalaria",
+    "instanciaText":"¿Cuántos días estuvo el paciente hospitalizado?",
+    "fecha": "Fecha",
+    "todasLasPredicciones": "Todas las predicciones",
+    "prediccionesPendientes":"Pendientes para completar",
+    "misResultados": "Mis Resultados"
 }

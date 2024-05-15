@@ -105,6 +105,8 @@ const { t } = useI18n();
     transform: translate(-50%, -50%);
     position: absolute;
     width: 4vw;
+    z-index: 99;
+    background: white;
     height: 4vw;
     border: 2px solid #000;
     border-radius: 100%;
@@ -113,10 +115,15 @@ const { t } = useI18n();
 .trayectoria_item .ctn:nth-child(2)::after {
     content: "";
     left: 50%;
+    transform: translate(-50%);
     top:60% ;
     position: absolute;
     width: 1px;
     height: 100%;
-    border: 2px solid #000;
+    border: 1px solid #000;
+}
+
+.trayectoria_item:last-child .ctn::after {
+    display: none;
 }
 </style>

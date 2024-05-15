@@ -318,7 +318,12 @@
     "Local": "Local",
     "Raquidea": "Spinal",
     "selectTipoAnestesia": "Select the type of anesthesia",
-    "instanciaHospitalaria": "Hospital Instance",
-    "instanciaText": "How many days was the patient hospitalized?"
+    "estanciaHospitalaria": "Hospital Stay",
+    "instanciaText": "How many days was the patient hospitalized?",
+    "fecha": "Date",
+    "todasLasPredicciones": "All Predictions",
+    "prediccionesPendientes": "Pending Predictions",
+    "misResultados": "My Results"
+ 
 
 }
